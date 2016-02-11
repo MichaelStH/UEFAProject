@@ -10,4 +10,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
     }
+
+    private void methodTest(){
+        int i = 1+1;
+    }
 }
