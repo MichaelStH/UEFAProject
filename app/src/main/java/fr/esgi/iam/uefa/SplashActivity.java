@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import fr.esgi.iam.uefa.activities.TeamHomeActivity;
+import fr.esgi.iam.uefa.activities.TeamSelectionActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -48,9 +49,10 @@ public class SplashActivity extends AppCompatActivity {
 
                     Log.i(TAG, "Launch activity");
 
-                    Intent intent = new Intent(SplashActivity.this, TeamHomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    Intent intent = new Intent(SplashActivity.this, TeamSelectionActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+                    finish();
                 }
             }
         }).start();

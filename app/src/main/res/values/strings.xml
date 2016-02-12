@@ -4,6 +4,35 @@
     <string name="euro_2016">Euro 2016</string>
     <string name="choose_your_team">Sélectionnez votre équipe favorite</string>
 
+    <!-- Team Selection -->
+    <string-array name="countries">
+        <item>Albanie</item>
+        <item>Allemagne</item>
+        <item>Angleterre</item>
+        <item>Autriche</item>
+        <item>Belgique</item>
+        <item>Croatie</item>
+        <item>Espagne</item>
+        <item>France</item>
+        <item>Hongrie</item>
+        <item>Irlande du Nord</item>
+        <item>Islande</item>
+        <item>Italie</item>
+        <item>Pays de Galles</item>
+        <item>Pologne</item>
+        <item>Portugal</item>
+        <item>République d\'Irelande</item>
+        <item>Rép. tchèque</item>
+        <item>Roumanie</item>
+        <item>Russie</item>
+        <item>Slovaquie</item>
+        <item>Suède</item>
+        <item>Suisse</item>
+        <item>Turquie</item>
+        <item>Ukraine</item>
+    </string-array>
+
+
     <!-- Team Home -->
     <string name="hint_team_name">Nom de l\'équipe favorite</string>
     <string name="history">Histoire</string>
