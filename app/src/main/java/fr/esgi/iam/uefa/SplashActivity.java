@@ -1,14 +1,54 @@
 package fr.esgi.iam.uefa;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
+
+import fr.esgi.iam.uefa.activities.TeamHomeActivity;
 
 public class SplashActivity extends AppCompatActivity {
+
+    private Context mContext;
+
+    private View rootView;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        rootView = getWindow().getDecorView();
+
+        mProgressBar = null;
+
+        if (rootView != null){
+            mProgressBar = (ProgressBar) rootView.findViewById(R.id.splash_progressBar);
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try
+                {
+                    Thread.sleep(3500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                finally {
+                    Intent intent = new Intent(SplashActivity.this, TeamHomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 
     private void methodTest(){
