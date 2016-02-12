@@ -1,3 +1,41 @@
 <resources>
     <string name="app_name">UEFA</string>
+
+    <string name="euro_2016">Euro 2016</string>
+    <string name="choose_your_team">Sélectionnez votre équipe favorite</string>
+
+    <!-- Team Home -->
+    <string name="hint_team_name">Nom de l\'équipe favorite</string>
+    <string name="history">Histoire</string>
+    <string name="players">Effectif</string>
+    <string name="ranking">Classement</string>
+    <string name="live">Live!</string>
+
+
+    <!-- Team History -->
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie. Fusce quis mauris a enim sollicitudin ultrices non eget velit. Aliquam eu pulvinar enim. Praesent libero nisl, ultricies vel maximus eu, maximus et nisi. Phasellus pharetra nec ligula vitae mollis. Quisque porttitor ornare magna, quis dignissim libero aliquam id. Donec sollicitudin ultrices ante, a semper erat tristique in. Vivamus sodales in ligula at sodales. Pellentesque hab...(line truncated)...</string>
+
+
+    <!-- Team Players -->
+    <string name="name">Nom</string>
+    <string name="firstname">Prénom</string>
+    <string name="number">N°</string>
+    <string name="age">Age</string>
+    <string name="position">Position</string>
+
+
+    <!-- Ranking -->
+    <!-- First ViewPager -->
+    <string name="day">Journée</string>
+
+    <!-- Second ViewPager -->
+    <string name="classement">Classement</string>
+
+    <!--Third ViewPager -->
+    <string name="strikers_passers">Buteurs et passeurs</string>
+
+
+    <!-- Live -->
+    <string name="events_notifications">Notifications des évènements</string>
+
 </resources>
