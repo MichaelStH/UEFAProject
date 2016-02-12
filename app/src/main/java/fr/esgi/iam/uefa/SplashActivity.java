@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import fr.esgi.iam.uefa.activities.TeamHomeActivity;
 
 public class SplashActivity extends AppCompatActivity {
+
+    private static final String TAG =  SplashActivity.class.getSimpleName();
 
     private Context mContext;
 
@@ -42,12 +45,15 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
                 finally {
+
+                    Log.i(TAG, "Launch activity");
+
                     Intent intent = new Intent(SplashActivity.this, TeamHomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
                 }
             }
-        });
+        }).start();
 
     }
 
