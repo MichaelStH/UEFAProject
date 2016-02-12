@@ -7,10 +7,25 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#5868A7"
     tools:context="fr.esgi.iam.uefa.SplashActivity">
 
-    <TextView
+    <ImageView
+        android:id="@+id/splash_img"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/uefa_logo" />
+
+    <ProgressBar
+        android:id="@+id/splash_progressBar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        style="@android:style/Widget.Material.Light.ProgressBar.Small.Inverse"
+        android:indeterminate="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/splash_img"
+        android:layout_marginTop="36dp"/>
+
+
 </RelativeLayout>
