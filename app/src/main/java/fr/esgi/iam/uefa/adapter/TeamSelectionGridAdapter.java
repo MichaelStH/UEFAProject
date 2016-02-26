@@ -49,13 +49,12 @@ public class TeamSelectionGridAdapter extends BaseAdapter{
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        // TODO Auto-generated method stub
         ViewHolder holder = new ViewHolder();
         View rowView;
 
@@ -67,14 +66,14 @@ public class TeamSelectionGridAdapter extends BaseAdapter{
         holder.countryName.setText(result[position]);
         holder.countryImg.setImageResource(imageId[position]);
 
-        rowView.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(mContext, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
-            }
-        });
+//        rowView.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                //Toast.makeText(mContext, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         return rowView;
     }
