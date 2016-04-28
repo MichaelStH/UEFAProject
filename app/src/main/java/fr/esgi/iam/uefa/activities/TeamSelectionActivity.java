@@ -78,31 +78,36 @@ public class TeamSelectionActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                try {
+                    Intent intent = new Intent(mContext, TeamHomeActivity.class);
 
-                Intent intent = new Intent(mContext, TeamHomeActivity.class);
+                    //int resourceId = mContext.getResources().getIdentifier(String.valueOf(((ImageView) view.findViewById(R.id.imageView_team_nation)).getTag()), "drawable", mContext.getPackageName());
+                    //String name = getResources().getResourceEntryName(countryFlags[position]);
 
-                //int resourceId = mContext.getResources().getIdentifier(String.valueOf(((ImageView) view.findViewById(R.id.imageView_team_nation)).getTag()), "drawable", mContext.getPackageName());
-                //String name = getResources().getResourceEntryName(countryFlags[position]);
+                    //Retrieve Name of the country
+                    String itemCountryName = (String) ((TextView) view.findViewById(R.id.textView_team_nation)).getText();
 
-                //Retrieve Name of the country
-                String itemCountryName = (String) ((TextView) view.findViewById(R.id.textView_team_nation)).getText();
+                    //Convert the flag into a bitmap
+                    Bitmap bitmapToEncode = BitmapFactory.decodeResource(getResources(), countryFlags[position]);
+                    //Encode the bitmap
+                    String itemCountryFlagsId = encodeToBase64(bitmapToEncode );
 
-                //Convert the flag into a bitmap
-                Bitmap bitmapToEncode = BitmapFactory.decodeResource(getResources(), countryFlags[position]);
-                //Encode the bitmap
-                String itemCountryFlagsId = encodeToBase64(bitmapToEncode );
+                    //Log.e( TAG, "Equipe : " + itemCountryName );
 
-                //Log.e( TAG, "Equipe : " + itemCountryName );
+                    //Build the bundle to send to the other activity
+                    intent.putExtra( MyApplication.TEAM_NATION_NAME_ARG, itemCountryName );
+                    intent.putExtra( MyApplication.TEAM_NATION_FLAG_ARG, itemCountryFlagsId );
 
-                //Build the bundle to send to the other activity
-                intent.putExtra( MyApplication.TEAM_NATION_NAME_ARG, itemCountryName );
-                intent.putExtra( MyApplication.TEAM_NATION_FLAG_ARG, itemCountryFlagsId );
+                    //Save in Shared Prefs
+                    saveInSharedPrefs( itemCountryName, itemCountryFlagsId );
 
-                //Save in Shared Prefs
-                saveInSharedPrefs( itemCountryName, itemCountryFlagsId );
+                    //Launch Home Activity
+                    startActivity(intent);
+                }
+                catch (Exception e){
+                    Log.e( TAG, e.getMessage() );
+                }
 
-                //Launch Home Activity
-                startActivity(intent);
             }
         });
     }
@@ -134,6 +139,9 @@ public class TeamSelectionActivity extends AppCompatActivity {
 
         SharedPreferences myPrefrence = getSharedPreferences( MyApplication.TEAM_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
         SharedPreferences.Editor editor = myPrefrence.edit();
+
+        editor.putBoolean( MyApplication.TEAM_IS_CHOSEN_ARG, true );
+
         editor.putString( MyApplication.TEAM_NATION_NAME_ARG, countryName );
         editor.putString( MyApplication.TEAM_NATION_FLAG_ARG, countryFlag );
         editor.commit();

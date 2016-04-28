@@ -34,11 +34,4 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/team_players_listview"
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/team_players_header_list"/>
-
 </RelativeLayout>

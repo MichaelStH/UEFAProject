@@ -55,25 +55,26 @@ public class TeamSelectionGridAdapter extends BaseAdapter{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder = new ViewHolder();
-        View rowView;
+        View rowView = convertView;
+        ViewHolder holder;
 
-        rowView = inflater.inflate(R.layout.team_selection_grid_item, null);
+        if (convertView == null){
+            rowView = inflater.inflate(R.layout.team_selection_grid_item, null);
 
-        holder.countryName=(TextView) rowView.findViewById(R.id.textView_team_nation);
-        holder.countryImg=(ImageView) rowView.findViewById(R.id.imageView_team_nation);
+            holder = new ViewHolder();
+
+            holder.countryName=(TextView) rowView.findViewById(R.id.textView_team_nation);
+            holder.countryImg=(ImageView) rowView.findViewById(R.id.imageView_team_nation);
+
+            rowView.setTag( holder );
+        }
+        else{
+            holder = (ViewHolder) rowView.getTag();
+        }
+
 
         holder.countryName.setText(result[position]);
         holder.countryImg.setImageResource(imageId[position]);
-
-//        rowView.setOnClickListener(new OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//                //Toast.makeText(mContext, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
-//            }
-//        });
 
         return rowView;
     }

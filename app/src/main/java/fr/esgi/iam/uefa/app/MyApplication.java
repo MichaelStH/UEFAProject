@@ -2,7 +2,9 @@ package fr.esgi.iam.uefa.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
+import fr.esgi.iam.uefa.rest.UefaRestClient;
 import fr.esgi.iam.uefa.singleton.MySingleton;
 
 /**
@@ -15,13 +17,27 @@ public class MyApplication extends Application {
     public static MyApplication instance;
     private static Context context;
 
+    private static UefaRestClient uefaRestClient;
+
     public static final String TEAM_SHARED_PREFS_TAG = "team_shared_prefs";
+
+    public static final String TEAM_IS_CHOSEN_ARG = "team_is_choose_arg";
 
     public static final String TEAM_NATION_NAME_ARG = "team_nation_name_arg";
     public static final String TEAM_NATION_FLAG_ARG = "team_nation_flag_arg";
 
     public MyApplication(){
         instance = this;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        uefaRestClient = new UefaRestClient();
+
+        Log.i( TAG, "MyApplication - OnCreate()" );
+
     }
 
     public static Context getAppContext( )

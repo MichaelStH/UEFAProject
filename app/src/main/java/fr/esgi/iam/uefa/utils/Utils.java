@@ -11,6 +11,9 @@ import android.widget.Toast;
  */
 public class Utils {
 
+    /** This class can't be instantiated. */
+    private Utils(){}
+
     public static ActionBar getToolbar(AppCompatActivity context){
         ActionBar toolbar = context.getSupportActionBar();
         return toolbar;

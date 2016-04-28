@@ -4,6 +4,8 @@
     <string name="euro_2016">Euro 2016</string>
     <string name="choose_your_team">Sélectionnez votre équipe favorite</string>
 
+    <string name="no_internet_connection">Vous n\'êtes pas connecté a Internet  :(</string>
+
     <!-- Team Selection -->
     <string-array name="countries">
         <item>Albanie</item>
