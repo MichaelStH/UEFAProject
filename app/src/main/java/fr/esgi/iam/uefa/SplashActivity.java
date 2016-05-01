@@ -20,12 +20,12 @@ public class SplashActivity extends AppCompatActivity {
 
     private static final String TAG =  SplashActivity.class.getSimpleName();
 
-    private Context mContext;
-
     private View rootView;
     private ProgressBar mProgressBar;
 
     private static final long TIME_POST_DELAYED = 3500;
+
+    private boolean isTeamAlreadyChosen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,15 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 Log.i(TAG, "Launch activity");
 
-                if( teamAlreadyChosen() ){
+                //Verify if the progressBar is showed
+                if ( mProgressBar.isInLayout() ){
+                    //Hide the progressBar
+                    mProgressBar.setVisibility( View.GONE );
+                }
+
+                isTeamAlreadyChosen = teamAlreadyChosen();
+
+                if( isTeamAlreadyChosen ){
                     Log.e(TAG, "teamAlreadyChosen launch home");
 
                     Intent intent = new Intent(SplashActivity.this, TeamHomeActivity.class);
@@ -63,10 +71,9 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
         }, TIME_POST_DELAYED );
-
     }
 
-    private boolean teamAlreadyChosen(){
+    public boolean teamAlreadyChosen(){
 
         boolean ok = false;
         boolean isChosen = false;
@@ -80,6 +87,5 @@ public class SplashActivity extends AppCompatActivity {
             ok = true;
 
         return ok;
-
     }
 }

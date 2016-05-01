@@ -2,6 +2,7 @@ package fr.esgi.iam.uefa.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import fr.esgi.iam.uefa.rest.UefaRestClient;
@@ -34,6 +35,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        context = this;
+
         uefaRestClient = new UefaRestClient();
 
         Log.i( TAG, "MyApplication - OnCreate()" );
@@ -43,5 +46,13 @@ public class MyApplication extends Application {
     public static Context getAppContext( )
     {
         return MyApplication.context;
+    }
+
+    /**
+     * Return the RestClient object in order to use Retrofit library
+     * @return uefaRestClient
+     */
+    public static UefaRestClient getUefaRestClient(){
+        return uefaRestClient;
     }
 }

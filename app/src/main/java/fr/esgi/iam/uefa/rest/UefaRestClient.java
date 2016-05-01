@@ -16,6 +16,7 @@ public class UefaRestClient {
 
     private static final String TAG = UefaRestClient.class.getSimpleName();
 
+    //BASE_ENDPOINT to fetch
     private static final String BASE_ENDPOINT = "http://dylan.absil.pro/projet/api";
 
     public UefaApiService apiService;
@@ -34,7 +35,6 @@ public class UefaRestClient {
                 .setEndpoint(BASE_ENDPOINT)
                 .setConverter(new GsonConverter(gson))
                 .build();
-
 
         apiService = restAdapter.create(UefaApiService.class);
 

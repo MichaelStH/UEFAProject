@@ -29,11 +29,29 @@
             android:text="@string/events_notifications"/>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/events_notifications_listview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_below="@id/team_live_title_header"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/team_live_title_header">
 
+        <ProgressBar
+            android:id="@+id/team_live_loader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleLargeInverse"
+            android:indeterminate="true"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/team_live_events_notifications_RecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:visibility="gone">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
 </RelativeLayout>

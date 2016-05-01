@@ -14,6 +14,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"
             android:text="@string/name"/>
 
         <TextView
@@ -21,6 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"
             android:text="@string/firstname"/>
 
         <TextView
@@ -28,6 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.4"
             android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"
             android:text="@string/number"/>
 
         <TextView
@@ -35,6 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
             android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"
             android:text="@string/age"/>
 
         <TextView
@@ -42,6 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"
             android:text="@string/position"/>
 
     </LinearLayout>
@@ -49,7 +59,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp">
+        android:layout_marginTop="8dp">
 
         <ProgressBar
             android:id="@+id/team_players_loader"
@@ -58,15 +68,15 @@
             style="?android:attr/progressBarStyleLargeInverse"
             android:layout_gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone"/>
+            android:layout_centerVertical="true"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/team_players_RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/team_players_header_list"
-            android:scrollbars="vertical">
+            android:scrollbars="vertical"
+            android:visibility="gone">
 
         </android.support.v7.widget.RecyclerView>
     </RelativeLayout>

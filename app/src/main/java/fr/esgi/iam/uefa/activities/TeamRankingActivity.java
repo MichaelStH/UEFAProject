@@ -46,8 +46,6 @@ public class TeamRankingActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.ranking_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
 
-
-
     }
 
     private void setupViewPager(ViewPager viewPager){
