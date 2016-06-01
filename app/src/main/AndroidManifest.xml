@@ -25,6 +25,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activities.LoginActivity"
+            android:theme="@style/SplashStyle"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+
 
         <activity android:name=".activities.TeamSelectionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>

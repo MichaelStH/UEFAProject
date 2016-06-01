@@ -12,9 +12,11 @@
 
     <ImageView
         android:id="@+id/splash_img"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
         android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
         android:src="@drawable/uefa_logo" />
 
     <ProgressBar
@@ -22,10 +24,10 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         style="?android:attr/progressBarStyleLargeInverse"
+        android:indeterminate="true"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/splash_img"
-        android:layout_marginTop="36dp"
-        android:visibility="gone"/>
+        android:layout_marginTop="36dp"/>
 
 
 </RelativeLayout>

@@ -121,10 +121,11 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
 
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
+
         int id;
 
-        id = v.getId();
+        id = view.getId();
 
         switch (id){
             case R.id.button_team_history :

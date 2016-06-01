@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -26,12 +27,10 @@ import fr.esgi.iam.uefa.app.MyApplication;
 public class TeamSelectionActivity extends AppCompatActivity {
 
     private static final String TAG = TeamSelectionActivity.class.getSimpleName();
-
-
     private Context mContext;
 
     private GridView mGridView;
-    private TeamSelectionGridAdapter mContryAdapter;
+    private TeamSelectionGridAdapter mCountryAdapter;
 
     private String [] countriesName;
     private int [] countryFlags = {
@@ -71,8 +70,8 @@ public class TeamSelectionActivity extends AppCompatActivity {
 
         mGridView = (GridView) findViewById(R.id.team_selection_grid_view);
 
-        mContryAdapter = new TeamSelectionGridAdapter(mContext, countriesName, countryFlags);
-        mGridView.setAdapter(mContryAdapter);
+        mCountryAdapter = new TeamSelectionGridAdapter(mContext, countriesName, countryFlags);
+        mGridView.setAdapter(mCountryAdapter);
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -92,8 +91,6 @@ public class TeamSelectionActivity extends AppCompatActivity {
                     //Encode the bitmap
                     String itemCountryFlagsId = encodeToBase64(bitmapToEncode );
 
-                    //Log.e( TAG, "Equipe : " + itemCountryName );
-
                     //Build the bundle to send to the other activity
                     intent.putExtra( MyApplication.TEAM_NATION_NAME_ARG, itemCountryName );
                     intent.putExtra( MyApplication.TEAM_NATION_FLAG_ARG, itemCountryFlagsId );
@@ -103,6 +100,7 @@ public class TeamSelectionActivity extends AppCompatActivity {
 
                     //Launch Home Activity
                     startActivity(intent);
+                    finish();
                 }
                 catch (Exception e){
                     Log.e( TAG, e.getMessage() );

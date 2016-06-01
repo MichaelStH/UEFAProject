@@ -23,6 +23,7 @@ public class MyApplication extends Application {
     public static final String TEAM_SHARED_PREFS_TAG = "team_shared_prefs";
 
     public static final String TEAM_IS_CHOSEN_ARG = "team_is_choose_arg";
+    public static boolean TEAM_IS_CHOSEN = false;
 
     public static final String TEAM_NATION_NAME_ARG = "team_nation_name_arg";
     public static final String TEAM_NATION_FLAG_ARG = "team_nation_flag_arg";
@@ -38,6 +39,7 @@ public class MyApplication extends Application {
         context = this;
 
         uefaRestClient = new UefaRestClient();
+        TEAM_IS_CHOSEN = teamAlreadyChosen();
 
         Log.i( TAG, "MyApplication - OnCreate()" );
 
@@ -55,4 +57,23 @@ public class MyApplication extends Application {
     public static UefaRestClient getUefaRestClient(){
         return uefaRestClient;
     }
+
+
+
+    public boolean teamAlreadyChosen(){
+
+        boolean ok = false;
+        boolean isChosen = false;
+
+        Log.e(TAG, "teamAlreadyChosen() - Read in SharedPrefs");
+
+        SharedPreferences sharedPref = getSharedPreferences( MyApplication.TEAM_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
+        isChosen = sharedPref.getBoolean( MyApplication.TEAM_IS_CHOSEN_ARG, false );
+
+        if ( isChosen == true )
+            ok = true;
+
+        return ok;
+    }
+
 }

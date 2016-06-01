@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * Created by michael on 09/03/2016.
@@ -51,5 +52,15 @@ public class DeviceManagerUtils {
             return true;
         else
             return false;
+    }
+
+    public static void hideKeyboard(Activity activity, Context context){
+        try {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        }
+        catch (Exception e){
+            e.getMessage();
+        }
     }
 }
