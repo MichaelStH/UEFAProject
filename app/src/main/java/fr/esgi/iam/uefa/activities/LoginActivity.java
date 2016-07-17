@@ -69,7 +69,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (view.getId() == R.id.login_connection_button){
             DeviceManagerUtils.hideKeyboard(this, mContext);
-            mProgressBar.setVisibility(View.VISIBLE);
             submitForm();
         }
     }
@@ -96,6 +95,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             return;
         }
+
+        mProgressBar.setVisibility(View.VISIBLE);
 
         new Handler().postDelayed(new Runnable() {
             @Override

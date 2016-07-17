@@ -29,7 +29,7 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
     private String bundle_team_name = "";
     private String bundle_team_flag = "";
 
-    private Button teamHistoryButton, teamPlayersButton, teamRankingButton, teamLiveEvents;
+    private Button teamHistoryButton, teamPlayersButton, teamRankingButton, teamLiveEventsButton, changeTeamButton;
     private View rootView = null;
     private TextView mTvHome;
     private ImageView mImgHome;
@@ -96,8 +96,9 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
         teamHistoryButton = (Button) findViewById(R.id.button_team_history);
         teamPlayersButton  = (Button) findViewById(R.id.button_team_players);
         teamRankingButton  = (Button) findViewById(R.id.button_team_ranking);
-        teamLiveEvents  = (Button) findViewById(R.id.button_team_live_events);
+        teamLiveEventsButton = (Button) findViewById(R.id.button_team_live_events);
 
+        changeTeamButton = (Button) findViewById(R.id.button_change_team);
         Log.i(TAG, "Views successfully initialized");
     }
 
@@ -105,7 +106,8 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
         teamHistoryButton.setOnClickListener(this);
         teamPlayersButton.setOnClickListener(this);
         teamRankingButton.setOnClickListener(this);
-        teamLiveEvents.setOnClickListener(this);
+        teamLiveEventsButton.setOnClickListener(this);
+        changeTeamButton.setOnClickListener( this );
     }
 
 
@@ -146,6 +148,11 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
             case R.id.button_team_live_events :
                 Log.d(TAG, "Launch live activity");
                 Utils.LaunchActivity(this, TeamLiveActivity.class);
+                break;
+
+            case R.id.button_change_team:
+                Log.d(TAG, "Team Selection activity");
+                Utils.LaunchActivity(this, TeamSelectionActivity.class);
                 break;
 
             default:

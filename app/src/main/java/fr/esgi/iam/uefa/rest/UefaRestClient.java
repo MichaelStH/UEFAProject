@@ -24,8 +24,7 @@ public class UefaRestClient {
     /**
      * Constructor
      */
-    public UefaRestClient()
-    {
+    public UefaRestClient() {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'")
                 .create();
@@ -42,7 +41,7 @@ public class UefaRestClient {
     }
 
     public UefaApiService getApiService(){
-        Log.i(TAG, "Method public YoutubeVideoApiService getApiService()");
+        Log.i(TAG, "Method public UefaApiService getApiService()");
         return apiService;
     }
 }

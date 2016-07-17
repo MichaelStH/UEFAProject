@@ -48,6 +48,7 @@
     <string name="players">Effectif</string>
     <string name="ranking">Classement</string>
     <string name="live">Live!</string>
+    <string name="change_team">Changer d\'équipe</string>
 
 
     <!-- Team History -->
