@@ -5,30 +5,85 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="16dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1. Equipe Favorite"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="2. Equipe A"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1. "
+                android:textSize="18sp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="3. Equipe G"/>
+            <TextView
+                android:id="@+id/team_ranking_ranking_1_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Equipe Favorite"
+                android:textSize="18sp"/>
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="4. Equipe E"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2. "
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/team_ranking_ranking_2_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Equipe"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3. "
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/team_ranking_ranking_3_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Equipe "
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4. "
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/team_ranking_ranking_4_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Equipe "
+                android:textSize="18sp"/>
+        </LinearLayout>
 
     </LinearLayout>
-
 </RelativeLayout>

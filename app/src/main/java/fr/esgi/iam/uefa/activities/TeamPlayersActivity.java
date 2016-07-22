@@ -72,9 +72,9 @@ public class TeamPlayersActivity extends AppCompatActivity {
                 public void success(List<Player> players, Response response) {
 
                     for ( Player player : players ) {
-                        if ( player.getIdEquipe( ).equals("1") ) {
+                        if ( player.getIdTeam( ).equals("1") ) {
 
-                            Log.d( "OHOH - test", "nom du joueur : " + player.getName() );
+                            Log.d( "OHOH - test", "nom du joueur : " + player.getSurname() );
 
                             playerList.add(player);
                         }

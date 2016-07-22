@@ -10,28 +10,21 @@ import org.parceler.Parcel;
 @Parcel
 public class Team {
 
-    public String idEquipe;
-    @SerializedName("Name")
+    public String id;
     public String name;
-    @SerializedName("Points")
     public String points;
-    @SerializedName("Played")
     public String played;
-    @SerializedName("Won")
     public String won;
-    @SerializedName("Drawn")
     public String drawn;
-    @SerializedName("Lost")
     public String lost;
     @SerializedName("BP")
     public String pointsFor;
     @SerializedName("BC")
     public String pointsAgainst;
-    @SerializedName("Diff")
+    @SerializedName("diff")
     public String scale;
-    @SerializedName("Selectionneur")
-    public String selectionneur;
-    @SerializedName("Flag")
+    public String coachName;
+    public String history;
     public String flag;
 
 
@@ -39,12 +32,12 @@ public class Team {
     ////////////////////  GETTER & SETTER  //////////////////////////
     ///////////////////////////////////////////////////////////////////////
 
-    public String getIdEquipe() {
-        return idEquipe;
+    public String getId() {
+        return id;
     }
 
-    public void setIdEquipe(String idEquipe) {
-        this.idEquipe = idEquipe;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -119,12 +112,20 @@ public class Team {
         this.scale = scale;
     }
 
-    public String getSelectionneur() {
-        return selectionneur;
+    public String getCoachName() {
+        return coachName;
     }
 
-    public void setSelectionneur(String selectionneur) {
-        this.selectionneur = selectionneur;
+    public void setCoachName(String coachName) {
+        this.coachName = coachName;
+    }
+
+    public String getHistory() {
+        return history;
+    }
+
+    public void setHistory(String history) {
+        this.history = history;
     }
 
     public String getFlag() {

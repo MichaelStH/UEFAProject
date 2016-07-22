@@ -7,12 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import fr.esgi.iam.uefa.R;
-import fr.esgi.iam.uefa.model.Matches;
 import fr.esgi.iam.uefa.model.Player;
 
 /**
@@ -70,7 +67,7 @@ public class StrikersPassersListAdapter extends RecyclerView.Adapter<StrikersPas
 
         Player itemPlayer = playerList.get( position );
 
-        holder.playerName.setText( itemPlayer.getName() );
-        holder.playerButs.setText( itemPlayer.getButs() );
+        holder.playerName.setText( itemPlayer.getSurname() );
+        holder.playerButs.setText( itemPlayer.getGoals() );
     }
 }

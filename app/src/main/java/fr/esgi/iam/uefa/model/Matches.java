@@ -8,11 +8,13 @@ import org.parceler.Parcel;
 @Parcel
 public class Matches {
 
-    public String idMatches;
+    public String id;
     public String date;
     public String time;
     public String idTeam1;
     public String idTeam2;
+    public String goalTeam1;
+    public String goalTeam2;
     public String score;
     public String idStade;
 
@@ -21,12 +23,12 @@ public class Matches {
     ///////////////////////////////////////////////////////////////////////
 
 
-    public String getIdMatches() {
-        return idMatches;
+    public String getId() {
+        return id;
     }
 
-    public void setIdMatches(String idMatches) {
-        this.idMatches = idMatches;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDate() {
@@ -59,6 +61,22 @@ public class Matches {
 
     public void setIdTeam2(String idTeam2) {
         this.idTeam2 = idTeam2;
+    }
+
+    public String getGoalTeam1() {
+        return goalTeam1;
+    }
+
+    public void setGoalTeam1(String goalTeam1) {
+        this.goalTeam1 = goalTeam1;
+    }
+
+    public String getGoalTeam2() {
+        return goalTeam2;
+    }
+
+    public void setGoalTeam2(String goalTeam2) {
+        this.goalTeam2 = goalTeam2;
     }
 
     public String getScore() {

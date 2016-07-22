@@ -10,29 +10,26 @@ import org.parceler.Parcel;
 @Parcel
 public class Player {
 
-    public String idPlayer;
-    public String name;
-    @SerializedName("surname")
-    public String firstName;
-    public String age;
+    public String id;
+    public String surname;
+    public String firstname;
+    public String birthdate;
+    @SerializedName("team")
     public String club;
-    public String idEquipe;
+    public String idTeam;
     public String matches;
-    public String buts;
-    @SerializedName("cartonsj")
-    public String yellowCards;
-    @SerializedName("cartonsr")
-    public String redCards;
-    @SerializedName("maillot")
-    public String backNumber;
-    @SerializedName("poste")
+    public String goals;
+    public String yellowCard;
+    public String redCard;
+    public String number;
+    @SerializedName("position")
     public String playerPosition;
 
 
-    public Player(String name, String buts){
+    public Player(String surname, String goals){
 
-        this.name = name;
-        this.buts = buts;
+        this.surname = surname;
+        this.goals = goals;
 
     }
 
@@ -41,36 +38,36 @@ public class Player {
     ////////////////////  GETTER & SETTER  //////////////////////////
     ///////////////////////////////////////////////////////////////////////
 
-    public String getIdPlayer() {
-        return idPlayer;
+    public String getId() {
+        return id;
     }
 
-    public void setIdPlayer(String idPlayer) {
-        this.idPlayer = idPlayer;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getAge() {
-        return age;
+    public String getBirthdate() {
+        return birthdate;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
     }
 
     public String getClub() {
@@ -81,12 +78,12 @@ public class Player {
         this.club = club;
     }
 
-    public String getIdEquipe() {
-        return idEquipe;
+    public String getIdTeam() {
+        return idTeam;
     }
 
-    public void setIdEquipe(String idEquipe) {
-        this.idEquipe = idEquipe;
+    public void setIdTeam(String idTeam) {
+        this.idTeam = idTeam;
     }
 
     public String getMatches() {
@@ -97,36 +94,36 @@ public class Player {
         this.matches = matches;
     }
 
-    public String getButs() {
-        return buts;
+    public String getGoals() {
+        return goals;
     }
 
-    public void setButs(String buts) {
-        this.buts = buts;
+    public void setGoals(String goals) {
+        this.goals = goals;
     }
 
-    public String getYellowCards() {
-        return yellowCards;
+    public String getYellowCard() {
+        return yellowCard;
     }
 
-    public void setYellowCards(String yellowCards) {
-        this.yellowCards = yellowCards;
+    public void setYellowCard(String yellowCard) {
+        this.yellowCard = yellowCard;
     }
 
-    public String getRedCards() {
-        return redCards;
+    public String getRedCard() {
+        return redCard;
     }
 
-    public void setRedCards(String redCards) {
-        this.redCards = redCards;
+    public void setRedCard(String redCard) {
+        this.redCard = redCard;
     }
 
-    public String getBackNumber() {
-        return backNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setBackNumber(String backNumber) {
-        this.backNumber = backNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getPlayerPosition() {

@@ -43,9 +43,15 @@ public class TeamHistoryActivity extends AppCompatActivity {
             @Override
             public void success(List<Article> articles, Response response) {
 
-                for (Article tempArticle : articles) {
+                /*for (Article tempArticle : articles) {
                     testBuilder.append(tempArticle.getTitle()).append("\n").append(tempArticle.getContent()).append("\n");
                 }
+
+                homeTextViewContent.setText( Html.fromHtml(testBuilder.toString()) );*/
+
+                //for (Article tempArticle : articles) {
+                testBuilder.append(articles.get(0).getTitle()).append("\n").append(articles.get(0).getContent()).append("\n");
+                //}
 
                 homeTextViewContent.setText( Html.fromHtml(testBuilder.toString()) );
             }

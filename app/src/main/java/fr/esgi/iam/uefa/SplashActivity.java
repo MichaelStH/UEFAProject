@@ -40,9 +40,9 @@ public class SplashActivity extends AppCompatActivity {
                     mProgressBar.setVisibility( View.INVISIBLE );
                 }
 
-//                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                 //Temporary
-                startActivity(new Intent(SplashActivity.this, TeamHomeActivity.class));
+//                startActivity(new Intent(SplashActivity.this, TeamHomeActivity.class));
                 finish();
 
             }

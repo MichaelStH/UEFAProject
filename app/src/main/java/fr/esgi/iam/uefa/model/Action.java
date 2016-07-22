@@ -10,12 +10,11 @@ import org.parceler.Parcel;
 @Parcel
 public class Action {
 
-    public String idAction;
+    public String id;
     public String idMatch;
-    public String idButeur;
-    public String temps;
+    public String idScorer;
+    public String time;
     public String photo;
-    @SerializedName("commentaire")
     public String comment;
 
 
@@ -24,12 +23,12 @@ public class Action {
     ///////////////////////////////////////////////////////////////////////
 
 
-    public String getIdAction() {
-        return idAction;
+    public String getId() {
+        return id;
     }
 
-    public void setIdAction(String idAction) {
-        this.idAction = idAction;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getIdMatch() {
@@ -40,20 +39,20 @@ public class Action {
         this.idMatch = idMatch;
     }
 
-    public String getIdButeur() {
-        return idButeur;
+    public String getIdScorer() {
+        return idScorer;
     }
 
-    public void setIdButeur(String idButeur) {
-        this.idButeur = idButeur;
+    public void setIdScorer(String idScorer) {
+        this.idScorer = idScorer;
     }
 
-    public String getTemps() {
-        return temps;
+    public String getTime() {
+        return time;
     }
 
-    public void setTemps(String temps) {
-        this.temps = temps;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getPhoto() {

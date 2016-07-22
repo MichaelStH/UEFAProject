@@ -84,8 +84,9 @@ public class StrikersPassersFragment extends Fragment {
                     for (Player player : playerList)
                     {
 
-                        String randomName = playerList.get( new Random( ).nextInt( playerList.size( ) ) ).getName( );
-                        String randomButs = String.valueOf( new Random().nextInt( ( 37 + 1 ) ) );
+                        String randomName = playerList.get( new Random( ).nextInt( playerList.size( ) ) ).getSurname( );
+//                        String randomButs = String.valueOf( new Random().nextInt( ( 8 + 1 ) ) );
+                        String randomButs = player.getGoals();
 
                         tempList.add( new Player(randomName, randomButs ) );
                     }

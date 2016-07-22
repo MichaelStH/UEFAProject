@@ -78,7 +78,7 @@ public class JourneyFragment extends Fragment {
                 @Override
                 public void success(List<Team> teams, Response response) {
                     for (Team team : teams){
-                        teamMap.put( Integer.valueOf( team.getIdEquipe( ) ), team.getName() );
+                        teamMap.put( Integer.valueOf( team.getId( ) ), team.getName() );
                         teamMapList.add( teamMap );
                     }
 
