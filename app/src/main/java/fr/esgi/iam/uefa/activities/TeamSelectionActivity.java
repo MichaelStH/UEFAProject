@@ -3,35 +3,44 @@ package fr.esgi.iam.uefa.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.esgi.iam.uefa.R;
 import fr.esgi.iam.uefa.adapter.TeamSelectionGridAdapter;
 import fr.esgi.iam.uefa.app.MyApplication;
+import fr.esgi.iam.uefa.model.Team;
+import fr.esgi.iam.uefa.utils.DeviceManagerUtils;
+import fr.esgi.iam.uefa.utils.Utils;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by MichaelWayne on 12/02/2016.
  */
-public class TeamSelectionActivity extends AppCompatActivity {
+public class TeamSelectionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     private static final String TAG = TeamSelectionActivity.class.getSimpleName();
     private Context mContext;
 
+    //Views and adapter
+    private View rootView;
     private GridView mGridView;
     private TeamSelectionGridAdapter mCountryAdapter;
 
+    private ArrayList<Team> teamsList;
+/*
     private String [] countriesName;
     private int [] countryFlags = {
             R.drawable.albania,
@@ -59,44 +68,74 @@ public class TeamSelectionActivity extends AppCompatActivity {
             R.drawable.turkey,
             R.drawable.ukraine
         };
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_selection);
 
         mContext = this;
-        countriesName = getApplicationContext().getResources().getStringArray(R.array.countries);
+
+        initViews();
+
+        //Test the internet's connection
+        if( !DeviceManagerUtils.isConnected(mContext) ) {
+
+            Utils.showActionInToast(mContext, mContext.getResources().getString( R.string.no_internet_connection ) );
+
+            getLayoutInflater().inflate(R.layout.no_connection_layout, (ViewGroup) rootView);
+
+        }
+        else {
+
+            MyApplication.getUefaRestClient().getApiService().getTeams(new Callback<List<Team>>() {
+                @Override
+                public void success(List<Team> teams, Response response) {
+                    if ( ! ( 200 == response.getStatus() ) ){
+                        Log.e( TAG, "Another code occurred : " + response.getStatus());
+                    }else{
+                        teamsList = new ArrayList<Team>();
+                        teamsList = (ArrayList<Team>) teams;
+
+                        mCountryAdapter = new TeamSelectionGridAdapter(mContext, teamsList);
+                        mGridView.setAdapter(mCountryAdapter);
+
+                        mGridView.setOnItemClickListener( TeamSelectionActivity.this );
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.e(TAG, "Retrofit error : " + error.getMessage());
+                }
+            });
+
+        }
+    }
+
+    private void initViews(){
+        rootView = getWindow().getDecorView();
 
         mGridView = (GridView) findViewById(R.id.team_selection_grid_view);
+    }
 
-        mCountryAdapter = new TeamSelectionGridAdapter(mContext, countriesName, countryFlags);
-        mGridView.setAdapter(mCountryAdapter);
 
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (parent.getId()){
+            case R.id.team_selection_grid_view:
 
                 try {
+
+                    Team teamChosen = (Team) mCountryAdapter.getItem(position);
+
                     Intent intent = new Intent(mContext, TeamHomeActivity.class);
 
-                    //int resourceId = mContext.getResources().getIdentifier(String.valueOf(((ImageView) view.findViewById(R.id.imageView_team_nation)).getTag()), "drawable", mContext.getPackageName());
-                    //String name = getResources().getResourceEntryName(countryFlags[position]);
-
-                    //Retrieve Name of the country
-                    String itemCountryName = (String) ((TextView) view.findViewById(R.id.textView_team_nation)).getText();
-
-                    //Convert the flag into a bitmap
-                    Bitmap bitmapToEncode = BitmapFactory.decodeResource(getResources(), countryFlags[position]);
-                    //Encode the bitmap
-                    String itemCountryFlagsId = encodeToBase64(bitmapToEncode );
-
                     //Build the bundle to send to the other activity
-                    intent.putExtra( MyApplication.TEAM_NATION_NAME_ARG, itemCountryName );
-                    intent.putExtra( MyApplication.TEAM_NATION_FLAG_ARG, itemCountryFlagsId );
+                    intent.putExtra( MyApplication.TEAM_NATION_ARG, teamChosen );
 
                     //Save in Shared Prefs
-                    saveInSharedPrefs( itemCountryName, itemCountryFlagsId );
+                    saveInSharedPrefs( teamChosen );
 
                     //Launch Home Activity
                     startActivity(intent);
@@ -105,44 +144,30 @@ public class TeamSelectionActivity extends AppCompatActivity {
                 catch (Exception e){
                     Log.e( TAG, e.getMessage() );
                 }
+                break;
 
-            }
-        });
+            default:
+                break;
+        }
     }
 
-    /**
-     * Method to encode a Bitmap into string base64
-     * @param image
-     * @return
-     */
-    public static String encodeToBase64(Bitmap image) {
-
-        Bitmap bitmapImage = image;
-        ByteArrayOutputStream mByteArrayOS = new ByteArrayOutputStream();
-
-        bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, mByteArrayOS);
-        byte[] mByte = mByteArrayOS.toByteArray();
-        String imageEncoded = Base64.encodeToString(mByte, Base64.DEFAULT);
-
-        //Log.d("Image Log:", imageEncoded);
-        return imageEncoded;
-    }
 
     /**
      * Pass myBitmap inside this method like something encodeTobase64 in my preference
-     * @param countryName
-     * @param countryFlag
+     * @param team
      */
-    public void saveInSharedPrefs(String countryName, String  countryFlag){
+    public void saveInSharedPrefs(Team team){
 
-        SharedPreferences myPrefrence = getSharedPreferences( MyApplication.TEAM_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
-        SharedPreferences.Editor editor = myPrefrence.edit();
+        SharedPreferences myPreference = getSharedPreferences( MyApplication.TEAM_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
+        SharedPreferences.Editor editor = myPreference.edit();
 
         editor.putBoolean( MyApplication.TEAM_IS_CHOSEN_ARG, true );
 
-        editor.putString( MyApplication.TEAM_NATION_NAME_ARG, countryName );
-        editor.putString( MyApplication.TEAM_NATION_FLAG_ARG, countryFlag );
-        editor.commit();
+        Gson gson = new Gson();
+        String json = gson.toJson(team);
+        editor.putString( MyApplication.TEAM_NATION_ARG, json );
+        editor.apply();
 
     }
+
 }

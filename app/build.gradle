@@ -38,4 +38,6 @@ dependencies {
 
     compile 'org.parceler:parceler-api:1.0.4'
 
+    compile 'com.google.code.gson:gson:2.7'
+
 }

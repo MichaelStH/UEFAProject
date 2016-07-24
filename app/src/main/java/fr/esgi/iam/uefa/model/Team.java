@@ -1,5 +1,7 @@
 package fr.esgi.iam.uefa.model;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
@@ -7,8 +9,7 @@ import org.parceler.Parcel;
 /**
  * Created by MichaelWayne on 28/04/2016.
  */
-@Parcel
-public class Team {
+public class Team implements Parcelable {
 
     public String id;
     public String name;
@@ -26,6 +27,58 @@ public class Team {
     public String coachName;
     public String history;
     public String flag;
+
+
+    public static final Creator<Team> CREATOR = new Creator<Team>() {
+        @Override
+        public Team createFromParcel(android.os.Parcel in) {
+            return new Team(in);
+        }
+
+        @Override
+        public Team[] newArray(int size) {
+            return new Team[size];
+        }
+    };
+
+    protected Team(android.os.Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        points = in.readString();
+        played = in.readString();
+        won = in.readString();
+        drawn = in.readString();
+        lost = in.readString();
+        pointsFor = in.readString();
+        pointsAgainst = in.readString();
+        scale = in.readString();
+        coachName = in.readString();
+        history = in.readString();
+        flag = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(android.os.Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(points);
+        dest.writeString(played);
+        dest.writeString(won);
+        dest.writeString(drawn);
+        dest.writeString(lost);
+        dest.writeString(pointsFor);
+        dest.writeString(pointsAgainst);
+        dest.writeString(scale);
+        dest.writeString(coachName);
+        dest.writeString(history);
+        dest.writeString(flag);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
 
 
     ///////////////////////////////////////////////////////////////////////

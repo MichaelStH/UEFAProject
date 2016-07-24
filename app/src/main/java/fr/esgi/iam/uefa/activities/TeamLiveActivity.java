@@ -17,6 +17,7 @@ import fr.esgi.iam.uefa.R;
 import fr.esgi.iam.uefa.adapter.live.LiveAdapter;
 import fr.esgi.iam.uefa.app.MyApplication;
 import fr.esgi.iam.uefa.model.Action;
+import fr.esgi.iam.uefa.model.Team;
 import fr.esgi.iam.uefa.utils.DeviceManagerUtils;
 import fr.esgi.iam.uefa.utils.DividerItemDecoration;
 import fr.esgi.iam.uefa.utils.Utils;
@@ -38,6 +39,8 @@ public class TeamLiveActivity extends AppCompatActivity {
     private ProgressBar mLoader;
     private RecyclerView contentRecyclerView;
     private LiveAdapter teamLiveAdapter;
+
+    private Team bundle_team;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

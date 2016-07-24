@@ -12,13 +12,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_margin="8dp"
-        android:text="@string/change_team"/>
+        android:text="@string/change_team"
+        style="@android:style/Widget.Material.Light.Button.Borderless"/>
 
     <RelativeLayout
         android:id="@+id/team_home_title_header"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.3"
         android:layout_alignParentTop="true"
         android:layout_marginTop="8dp"
         android:orientation="horizontal">
@@ -39,19 +40,19 @@
         android:id="@+id/team_home_image_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/team_home_imageView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             android:layout_gravity="center"
             android:layout_margin="16dp"
-            android:layout_below="@id/team_home_title_header" />
+            tools:src="@drawable/croatia"/>
 
     </LinearLayout>
 
@@ -60,7 +61,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.2"
         android:layout_gravity="bottom"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
@@ -71,22 +72,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="8dp">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/button_team_history"
                     android:layout_width="@dimen/button_dimen"
                     android:layout_height="wrap_content"
-                    android:text="@string/history"
-                    android:layout_gravity="center"/>
+                    android:text="@string/history"/>
 
             </LinearLayout>
 
@@ -94,14 +95,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/button_team_players"
                     android:layout_width="@dimen/button_dimen"
                     android:layout_height="wrap_content"
-                    android:text="@string/players"
-                    android:layout_gravity="center"/>
+                    android:text="@string/players"/>
 
             </LinearLayout>
 
@@ -112,22 +113,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="8dp">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/button_team_ranking"
                     android:layout_width="@dimen/button_dimen"
                     android:layout_height="wrap_content"
-                    android:text="@string/ranking"
-                    android:layout_gravity="center"/>
+                    android:text="@string/ranking"/>
 
             </LinearLayout>
 
@@ -135,16 +136,34 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/button_team_live_events"
                     android:layout_width="@dimen/button_dimen"
                     android:layout_height="wrap_content"
-                    android:text="@string/live"
-                    android:layout_gravity="center"/>
+                    android:text="@string/live"/>
 
             </LinearLayout>
         </LinearLayout>
+
+        <!-- Third row  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_online_bets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bet"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

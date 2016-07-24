@@ -29,6 +29,9 @@
             android:theme="@style/SplashStyle"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
 
+        <activity android:name=".activities.RegisterActivity"
+            android:theme="@style/SplashStyle"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
 
         <activity android:name=".activities.TeamSelectionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
@@ -78,6 +81,15 @@
             </meta-data>
         </activity>
 
+        <!-- Bet -->
+        <activity
+            android:name=".activities.TeamBetActivity"
+            android:parentActivityName=".activities.TeamHomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.TeamHomeActivity">
+            </meta-data>
+        </activity>
 
     </application>
 

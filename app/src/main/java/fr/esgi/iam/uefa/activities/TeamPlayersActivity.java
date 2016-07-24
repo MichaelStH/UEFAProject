@@ -55,7 +55,6 @@ public class TeamPlayersActivity extends AppCompatActivity {
         //Initialize  the view
         initViews();
 
-
         //Test the internet's connection
         if( !DeviceManagerUtils.isConnected(mContext) ) {
 
