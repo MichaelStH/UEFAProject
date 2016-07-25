@@ -153,7 +153,7 @@ public class TeamSelectionActivity extends AppCompatActivity implements AdapterV
 
 
     /**
-     * Pass myBitmap inside this method like something encodeTobase64 in my preference
+     *
      * @param team
      */
     public void saveInSharedPrefs(Team team){

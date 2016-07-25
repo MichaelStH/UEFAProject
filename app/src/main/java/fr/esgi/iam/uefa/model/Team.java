@@ -11,7 +11,7 @@ import org.parceler.Parcel;
  */
 public class Team implements Parcelable {
 
-    public String id;
+    public int id;
     public String name;
     public String points;
     public String played;
@@ -42,7 +42,7 @@ public class Team implements Parcelable {
     };
 
     protected Team(android.os.Parcel in) {
-        id = in.readString();
+        id = in.readInt();
         name = in.readString();
         points = in.readString();
         played = in.readString();
@@ -59,7 +59,7 @@ public class Team implements Parcelable {
 
     @Override
     public void writeToParcel(android.os.Parcel dest, int flags) {
-        dest.writeString(id);
+        dest.writeInt(id);
         dest.writeString(name);
         dest.writeString(points);
         dest.writeString(played);
@@ -85,11 +85,11 @@ public class Team implements Parcelable {
     ////////////////////  GETTER & SETTER  //////////////////////////
     ///////////////////////////////////////////////////////////////////////
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

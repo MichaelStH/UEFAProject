@@ -78,7 +78,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Vi
 
         holder.name.setText(itemPlayer.getSurname());
         holder.firstname.setText(itemPlayer.getFirstname());
-        holder.number.setText(itemPlayer.getNumber());
+        holder.number.setText(itemPlayer.getNumber() + "");
         holder.age.setText( formatAge( itemPlayer.getBirthdate() ) );
         holder.field.setText(itemPlayer.getPlayerPosition());
     }

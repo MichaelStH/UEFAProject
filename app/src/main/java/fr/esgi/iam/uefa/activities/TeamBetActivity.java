@@ -13,13 +13,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import fr.esgi.iam.uefa.R;
 import fr.esgi.iam.uefa.app.MyApplication;
+import fr.esgi.iam.uefa.helper.RetrofitHelper;
 import fr.esgi.iam.uefa.model.BetResponse;
+import fr.esgi.iam.uefa.model.Match;
 import fr.esgi.iam.uefa.model.Team;
 import fr.esgi.iam.uefa.utils.DeviceManagerUtils;
 import fr.esgi.iam.uefa.utils.Utils;
@@ -32,25 +40,32 @@ import retrofit.client.Response;
  */
 public class TeamBetActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
+    //TAG & Context
     private static final String TAG = TeamBetActivity.class.getSimpleName();
-    private Context mContext;
+    public static Context mContext = null;
 
+    //Views
     private View rootView;
-    private Spinner teamName1Spinner, teamScore1Spinner, teamName2Spinner, teamScore2Spinner;
+    private static Spinner teamMatchSpinner;
+    private Spinner teamScore1Spinner;
+    private Spinner teamScore2Spinner;
     private EditText moneyEditText;
     private Button betButton;
 
-    private int scoreTeam1 = 0, scoreTeam2 = 0, creditsWagered = 0;
-    private String userToken = "";
+    private static List<Match> matchesList = null;
+    private static List<Team> teamsList = null;
 
-    private ArrayList<String> teamsNameList;
+    private int idMatch = 0, scoreTeam1 = 0, scoreTeam2 = 0, creditsWagered = 0;
+    private String szIdMatch = "", userToken = "";
+
+    private ArrayList<String> matchesInfosList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_bet);
 
-        mContext = this;
+        mContext = TeamBetActivity.this;
 
         initViews();
 
@@ -62,7 +77,7 @@ public class TeamBetActivity extends AppCompatActivity implements AdapterView.On
 
         }
         else {
-            getTeamsNameList();
+            loadAvailableMatches();
         }
 
     }
@@ -70,10 +85,8 @@ public class TeamBetActivity extends AppCompatActivity implements AdapterView.On
     private void initViews(){
         rootView = getWindow().getDecorView();
 
-        teamName1Spinner = (Spinner) findViewById(R.id.team_bet_team_1_spinner);
+        teamMatchSpinner = (Spinner) findViewById(R.id.team_bet_team_match);
         teamScore1Spinner = (Spinner) findViewById(R.id.team_bet_score_team_1_spinner);
-
-        teamName2Spinner = (Spinner) findViewById(R.id.team_bet_team_2_spinner);
         teamScore2Spinner = (Spinner) findViewById(R.id.team_bet_score_team_2_spinner);
 
         moneyEditText = (EditText) findViewById(R.id.team_bet_money_editText);
@@ -84,47 +97,102 @@ public class TeamBetActivity extends AppCompatActivity implements AdapterView.On
             betButton.setOnClickListener( TeamBetActivity.this );
     }
 
-    private void getTeamsNameList(){
-
-        MyApplication.getUefaRestClient().getApiService().getTeams(new Callback<List<Team>>() {
-            @Override
-            public void success(List<Team> teams, Response response) {
-                teamsNameList = new ArrayList<String>();
-
-                for (Team team : teams)
-                    teamsNameList.add(team.getName());
-
-                setupSpinners(teamsNameList);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e(TAG, error.getMessage());
-            }
-        });
+    /**
+     * Make REST call to get matches and teams
+     */
+    public void loadAvailableMatches(){
+        RetrofitHelper.getTeams((TeamBetActivity) mContext);
+        RetrofitHelper.getMatches((TeamBetActivity) mContext);
     }
 
-    private void setupSpinners(ArrayList<String> teamsNamesList){
+    public void onDataLoaded( List<Match> matches, List<Team> teams ){
 
-        teamName1Spinner.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_dropdown_item, teamsNamesList));
-        teamName1Spinner .setOnItemSelectedListener( TeamBetActivity.this );
+        matchesList = matches;
+        teamsList = teams;
 
-        teamName2Spinner.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_dropdown_item, teamsNamesList));
-        teamName2Spinner .setOnItemSelectedListener( TeamBetActivity.this );
+        matchesInfosList = getAvailableMatches();
+
+        teamMatchSpinner.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_dropdown_item, matchesInfosList));
+        teamMatchSpinner .setOnItemSelectedListener( this );
 
     }
+
+    /**
+     * Old code
+     *
+    boolean canBetOnMatch( String szCurrentDate, String szMatchDate ) {
+
+        // Doivent être sous format 2016-01-30
+        szMatchDate = szMatchDate.replaceAll( "-", "" );
+        szCurrentDate = szCurrentDate.replaceAll( "-", "" );
+
+        return ( Integer.parseInt( szCurrentDate ) <= Integer.parseInt( szMatchDate ) );
+    }
+    */
+
+    public ArrayList<String> getAvailableMatches(  ) {
+        String szTeam1, szTeam2;
+        ArrayList<String> matchesAvailable = null;
+
+        Calendar currentCalendar = Calendar.getInstance( );
+        Calendar matchCalendar = Calendar.getInstance( );
+        DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+        Date currentDate = new Date( );
+        String szMatchDate = null;
+
+        currentCalendar.setTime( currentDate );
+
+        try {
+
+            for( Match match : matchesList ) {
+                matchCalendar.setTime( dateFormat.parse( match.getDate() ) );
+
+                if(     matchCalendar.get( Calendar.YEAR ) == currentCalendar.get( Calendar.YEAR ) &&
+                        matchCalendar.get( Calendar.DAY_OF_YEAR ) >= currentCalendar.get( Calendar.DAY_OF_YEAR ) ) {
+
+                    szTeam1 = retrieveTeamName( teamsList, match.getIdTeam1() );
+                    szTeam2 = retrieveTeamName( teamsList, match.getIdTeam2() );
+
+                    if( matchesAvailable == null ) {
+                        matchesAvailable = new ArrayList<String>();
+                    }
+
+                    matchesAvailable.add( match.getId() + ". " + szTeam1 + " VS " + szTeam2 + " (" + match.getDate() + " " + match.getTime() + ")" );
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace( );
+        }
+
+        return matchesAvailable;
+    }
+
+    public static String retrieveTeamName( List<Team> teams, int idTeam ) {
+        String szTeamName = null;
+
+        for( Team team : teams ) {
+            if( team.id == idTeam ) {
+                szTeamName = team.name;
+                break;
+            }
+        }
+        return szTeamName;
+    }
+
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()){
-            case R.id.team_bet_team_1_spinner:
+            case R.id.team_bet_team_match:
+
+                szIdMatch = String.valueOf(teamMatchSpinner.getSelectedItem().toString().charAt(0));
+                Log.e(TAG, "Test id : " + szIdMatch);
+                idMatch = Integer.valueOf( szIdMatch );
                 break;
 
             case R.id.team_bet_score_team_1_spinner:
                 scoreTeam1 = Integer.valueOf( teamScore1Spinner.getSelectedItem().toString() );
-                break;
-
-            case R.id.team_bet_team_2_spinner:
                 break;
 
             case R.id.team_bet_score_team_2_spinner:
@@ -144,29 +212,30 @@ public class TeamBetActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onClick(View view) {
 
-        Log.e(TAG, "button click");
+//        Log.e(TAG, "button click");
 
-        SharedPreferences sharedPref = getSharedPreferences( MyApplication.TEAM_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
+        SharedPreferences sharedPref = getSharedPreferences( MyApplication.USER_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
         userToken = sharedPref.getString( MyApplication.USER_TOKEN_ARG, "" );
 
         if ( moneyEditText.getText().toString().isEmpty() ){
             moneyEditText.setError("Ce champs ne pas être vide");
         }else{
+
             creditsWagered = Integer.valueOf(moneyEditText.getText().toString());
 
-            MyApplication.getUefaRestClient().getApiService().createBet(userToken, 7, creditsWagered, scoreTeam1, scoreTeam2, new Callback<BetResponse>() {
+            MyApplication.getUefaRestClient().getApiService().createBet(userToken, idMatch, creditsWagered, scoreTeam1, scoreTeam2, new Callback<BetResponse>() {
                 @Override
                 public void success(BetResponse betResponse, Response response) {
                     if ( ! ( 200 == response.getStatus() ) ){
                         Log.e( TAG, "Another code occurred : " + response.getStatus());
                     }else{
 
-                        Log.e(TAG, "Error : " + betResponse.getError() );
-                        Log.e(TAG, "Response \n"
-                                + betResponse.getBet().getUserUID() + "\n"
-                                + betResponse.getBet().getCreditsWagered() + "\n"
-                                + betResponse.getBet().getScoreMatch1() + "\n"
-                                + betResponse.getBet().getScoreMatch2() + "\n");
+                        if ( null != betResponse.getError() ) {
+                            Log.e(TAG, "Error : " + betResponse.getError());
+                            Toast.makeText(mContext, betResponse.getError(), Toast.LENGTH_SHORT).show();
+                        }
+
+                        //TODO: inform the user that his bet has successfully been taken
                     }
                 }
 

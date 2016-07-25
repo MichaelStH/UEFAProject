@@ -10,7 +10,7 @@ import org.parceler.Parcel;
 @Parcel
 public class Player {
 
-    public String id;
+    public int id;
     public String surname;
     public String firstname;
     public String birthdate;
@@ -21,7 +21,7 @@ public class Player {
     public String goals;
     public String yellowCard;
     public String redCard;
-    public String number;
+    public int number;
     @SerializedName("position")
     public String playerPosition;
 
@@ -38,11 +38,11 @@ public class Player {
     ////////////////////  GETTER & SETTER  //////////////////////////
     ///////////////////////////////////////////////////////////////////////
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -118,11 +118,11 @@ public class Player {
         this.redCard = redCard;
     }
 
-    public String getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 

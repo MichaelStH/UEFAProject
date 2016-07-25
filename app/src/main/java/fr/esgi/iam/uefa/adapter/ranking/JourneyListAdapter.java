@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import fr.esgi.iam.uefa.R;
-import fr.esgi.iam.uefa.model.Matches;
+import fr.esgi.iam.uefa.model.Match;
 
 /**
  * Created by MichaelWayne on 01/05/2016.
@@ -23,10 +23,10 @@ public class JourneyListAdapter extends RecyclerView.Adapter<JourneyListAdapter.
     private Context context;
     private LayoutInflater inflater;
 
-    private List<Matches> matchesList;
+    private List<Match> matchesList;
     private List<HashMap<Integer, String>> teamMapList;
 
-    public JourneyListAdapter(Context context, List<Matches> matchesList, List<HashMap<Integer, String>> teamMapList){
+    public JourneyListAdapter(Context context, List<Match> matchesList, List<HashMap<Integer, String>> teamMapList){
 
         this.context = context;
         this.matchesList = matchesList;
@@ -69,7 +69,7 @@ public class JourneyListAdapter extends RecyclerView.Adapter<JourneyListAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        Matches itemMatch = matchesList.get( position );
+        Match itemMatch = matchesList.get( position );
 
         holder.team1.setText( teamMapList.get( Integer.valueOf( itemMatch.getIdTeam1( ) ) -1 ).get( Integer.valueOf( itemMatch.getIdTeam1( ) ) ) );
         holder.team2.setText( teamMapList.get( Integer.valueOf( itemMatch.getIdTeam2( ) ) -1 ).get( Integer.valueOf( itemMatch.getIdTeam2( ) ) ) );

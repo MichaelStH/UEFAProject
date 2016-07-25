@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -138,50 +139,90 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         mProgressBar.setVisibility(View.VISIBLE);
-        /*
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "Launch activity");
 
-                //Verify if the progressBar is showed
-                if (mProgressBar.isInLayout()) {
-                    //Hide the progressBar
-                    mProgressBar.setVisibility(View.INVISIBLE);
-                }
-
-                if( MyApplication.TEAM_IS_CHOSEN && MyApplication.USER_TOKEN_IS_VALID ){
-                    Log.e(TAG, "teamAlreadyChosen launch home");
-
-                    Intent intent = new Intent(LoginActivity.this, TeamHomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-
-                }
-                else{
-                    Log.e(TAG, "not teamAlreadyChosen launch selection team");
-
-                    //Verify if the progressBar is showed
-                    if (null != mProgressBar) {
-                        //Hide the progressBar
-                        mProgressBar.setVisibility(View.GONE);
-                    }
-
-                    Toast.makeText(mContext, "Veullez vous enregistrer pour accéder au contenu de cette application", Toast.LENGTH_SHORT).show();
-
-                    *//*
-                    Intent intent = new Intent(LoginActivity.this, TeamSelectionActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                    *//*
-                }
-
-            }
-        }, TIME_POST_DELAYED);
-        */
+        connectUser();
     }
+
+    public void connectUser(){
+        String email = loginEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString();
+
+        MyApplication.getUefaRestClient().getApiService().connectUser(email, password, new Callback<UserResponse>() {
+            @Override
+            public void success(UserResponse userResponse, Response response) {
+                if ( ! ( 200 == response.getStatus() ) ){
+                    Log.e( TAG, "Another code occurred : " + response.getStatus());
+                }else{
+
+                    if ( null != userResponse.getError() ) {
+                        Log.e(TAG, "Error : " + userResponse.getError());
+                        Toast.makeText(mContext, userResponse.getError(), Toast.LENGTH_SHORT).show();
+                    }else {
+
+//                        Log.e(TAG, "test token got : " + userResponse.getUser().getToken());
+                        saveUserUIDAndToken( userResponse.getUser().getUid(), userResponse.getUser().getToken() );
+//                        Log.i(TAG, "Launch activity");
+
+                        //Verify if the progressBar is showed
+                        if (mProgressBar.isInLayout()) {
+                            //Hide the progressBar
+                            mProgressBar.setVisibility(View.GONE);
+                        }
+
+                        if( MyApplication.TEAM_IS_CHOSEN ){
+                            Log.e(TAG, "teamAlreadyChosen launch home");
+
+                            Intent intent = new Intent(LoginActivity.this, TeamHomeActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+
+                            /*
+                            Utils.LaunchActivity(mContext, TeamHomeActivity.class);
+                            finish();
+                            */
+                        } else if ( !MyApplication.TEAM_IS_CHOSEN && MyApplication.USER_TOKEN_IS_VALID ){
+
+                            Log.e(TAG, "not teamAlreadyChosen launch selection team");
+
+                            Intent intent = new Intent(LoginActivity.this, TeamSelectionActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        } else {
+
+                            //Verify if the progressBar is showed
+                            if (null != mProgressBar) {
+                                //Hide the progressBar
+                                mProgressBar.setVisibility(View.GONE);
+                            }
+
+                            Toast.makeText(mContext, "Veuillez vous enregistrer pour accéder au contenu de cette application", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(TAG, error.getMessage());
+            }
+        });
+    }
+
+    public void saveUserUIDAndToken( String userUID, String userToken ){
+
+        SharedPreferences sharedPref = getSharedPreferences( MyApplication.USER_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putString( MyApplication.USER_UID_ARG, userUID );
+        editor.putString( MyApplication.USER_TOKEN_ARG, userToken );
+        editor.apply();
+
+    }
+
 
     private boolean validateEmail() {
         String email = loginEditText.getText().toString().trim();
@@ -262,3 +303,50 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 }
+
+
+/**
+ * old code
+ *
+new Handler().postDelayed(new Runnable() {
+    @Override
+    public void run() {
+        Log.i(TAG, "Launch activity");
+
+        //Verify if the progressBar is showed
+        if (mProgressBar.isInLayout()) {
+            //Hide the progressBar
+            mProgressBar.setVisibility(View.INVISIBLE);
+        }
+
+        if( MyApplication.TEAM_IS_CHOSEN && MyApplication.USER_TOKEN_IS_VALID ){
+            Log.e(TAG, "teamAlreadyChosen launch home");
+
+            Intent intent = new Intent(LoginActivity.this, TeamHomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+
+        }
+        else{
+            Log.e(TAG, "not teamAlreadyChosen launch selection team");
+
+            //Verify if the progressBar is showed
+            if (null != mProgressBar) {
+                //Hide the progressBar
+                mProgressBar.setVisibility(View.GONE);
+            }
+
+            Toast.makeText(mContext, "Veullez vous enregistrer pour accéder au contenu de cette application", Toast.LENGTH_SHORT).show();
+
+            *//*
+            Intent intent = new Intent(LoginActivity.this, TeamSelectionActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+            *//*
+        }
+
+    }
+}, TIME_POST_DELAYED);
+*/

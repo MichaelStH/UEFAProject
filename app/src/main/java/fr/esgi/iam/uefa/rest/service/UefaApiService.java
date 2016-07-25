@@ -6,7 +6,7 @@ import fr.esgi.iam.uefa.model.Action;
 import fr.esgi.iam.uefa.model.Article;
 import fr.esgi.iam.uefa.model.Bet;
 import fr.esgi.iam.uefa.model.BetResponse;
-import fr.esgi.iam.uefa.model.Matches;
+import fr.esgi.iam.uefa.model.Match;
 import fr.esgi.iam.uefa.model.Player;
 import fr.esgi.iam.uefa.model.Team;
 import fr.esgi.iam.uefa.model.UserResponse;
@@ -30,6 +30,9 @@ public interface UefaApiService {
     void connectUser(@Query("login") String login, @Query("password") String password, Callback <UserResponse> callback) ;
 
     @GET("/api/users/")
+    void isUserConnected(@Query("token") String userToken, Callback <UserResponse> callback) ;
+
+    @GET("/api/users/")
     void disconnectUser(@Query( "disconnect" ) boolean bool, @Query("token") String userToken);
 
     @GET("/api/users/")
@@ -51,13 +54,13 @@ public interface UefaApiService {
     void getPlayers(Callback<List<Player>> cb);
 
     @GET("/api/matches/")
-    void getMatches(Callback<List<Matches>> cb);
+    void getMatches(Callback<List<Match>> cb);
 
     @FormUrlEncoded
     @POST("/api/bets/")
-    void createBet(@Field("token") String userToken, @Field("idMatch") int idMatch, @Field("creditsWagered") int creditWagered, @Field("scoreTeam1") int scoreTeam1, @Field("scoreTeam2") int scoreTeam2, Callback<BetResponse> callback);
+    void createBet(@Field("token") String userToken, @Field("idMatch") int idMatch, @Field("creditsWagered") int creditsWagered, @Field("scoreTeam1") int scoreTeam1, @Field("scoreTeam2") int scoreTeam2, Callback<BetResponse> callback);
 
     @GET("/api/bets/")
-    void getUserBetsList(@Query("uid") String userUID,  Callback<List<Bet>> cb);
+    void getUserBetsList(@Query("uid") String userUID,  Callback<BetResponse> cb);
 
 }

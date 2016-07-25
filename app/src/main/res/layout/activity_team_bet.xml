@@ -42,7 +42,7 @@
                 android:layout_margin="8dp">
 
                 <Spinner
-                    android:id="@+id/team_bet_team_1_spinner"
+                    android:id="@+id/team_bet_team_match"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.5"
@@ -51,6 +51,32 @@
                     android:spinnerMode="dropdown"
                     android:prompt="@string/bet_country_prompt"
                     style="@android:style/Widget.Material.Spinner"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimary"
+                android:alpha=".3"
+                android:layout_margin="@dimen/activity_horizontal_margin"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Score "
+                android:textSize="36sp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/activity_horizontal_margin"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="16dp">
 
                 <Spinner
                     android:id="@+id/team_bet_score_team_1_spinner"
@@ -63,34 +89,16 @@
                     android:entries="@array/bet_score_entries"
                     style="@android:style/Widget.Material.Spinner"/>
 
-            </LinearLayout>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" - "
-                android:textSize="36sp"
-                android:gravity="center"
-                android:layout_gravity="center"/>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="8dp">
-
-                <Spinner
-                    android:id="@+id/team_bet_team_2_spinner"
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:layout_margin="8dp"
+                    android:layout_weight="0.5"
+                    android:text=" - "
+                    android:textSize="36sp"
+                    android:gravity="center"
                     android:layout_gravity="center"
-                    android:spinnerMode="dropdown"
-                    android:prompt="@string/bet_country_prompt"
-                    style="@android:style/Widget.Material.Spinner"/>
+                    android:layout_margin="@dimen/activity_horizontal_margin"/>
 
                 <Spinner
                     android:id="@+id/team_bet_score_team_2_spinner"

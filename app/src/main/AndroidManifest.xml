@@ -81,6 +81,17 @@
             </meta-data>
         </activity>
 
+
+        <!-- Bet History -->
+        <activity
+            android:name=".activities.TeamBetHistoryActivity"
+            android:parentActivityName=".activities.TeamHomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.TeamHomeActivity">
+            </meta-data>
+        </activity>
+
         <!-- Bet -->
         <activity
             android:name=".activities.TeamBetActivity"

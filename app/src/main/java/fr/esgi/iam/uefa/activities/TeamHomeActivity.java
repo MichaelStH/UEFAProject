@@ -25,11 +25,10 @@ import fr.esgi.iam.uefa.utils.Utils;
 public class TeamHomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = TeamHomeActivity.class.getSimpleName();
-
     private Context mContext = null;
 
     private View rootView = null;
-    private Button teamHistoryButton, teamPlayersButton, teamRankingButton, teamLiveEventsButton, teamBetButton, changeTeamButton;
+    private Button teamHistoryButton, teamPlayersButton, teamRankingButton, teamLiveEventsButton, teamBetHistoryButton, teamBetButton, changeTeamButton;
     private TextView mTvHome;
     private ImageView mImgHome;
 
@@ -54,12 +53,12 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
 
             Gson gson = new Gson();
             String json = sharedPref.getString( MyApplication.TEAM_NATION_ARG, "" );
-            Team team = gson.fromJson(json, Team.class);
+            bundle_team = gson.fromJson(json, Team.class);
 
-            if (team != null){
-                mTvHome.setText(team.getName());
+            if (bundle_team != null){
+                mTvHome.setText(bundle_team.getName());
                 Picasso.with(this)
-                        .load(UefaRestClient.BASE_ENDPOINT + "/" + team.getFlag())
+                        .load(UefaRestClient.BASE_ENDPOINT + "/" + bundle_team.getFlag())
                         .into(mImgHome);
             }
             return;
@@ -92,6 +91,7 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
         teamPlayersButton  = (Button) findViewById(R.id.button_team_players);
         teamRankingButton  = (Button) findViewById(R.id.button_team_ranking);
         teamLiveEventsButton = (Button) findViewById(R.id.button_team_live_events);
+        teamBetHistoryButton = (Button) findViewById(R.id.button_team_bet_history);
         teamBetButton = (Button) findViewById(R.id.button_online_bets);
 
         changeTeamButton = (Button) findViewById(R.id.button_change_team);
@@ -103,6 +103,7 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
         teamPlayersButton.setOnClickListener(this);
         teamRankingButton.setOnClickListener(this);
         teamLiveEventsButton.setOnClickListener(this);
+        teamBetHistoryButton.setOnClickListener(this);
         teamBetButton.setOnClickListener(this);
         changeTeamButton.setOnClickListener( this );
     }
@@ -141,6 +142,11 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
             case R.id.button_team_live_events :
                 Log.d(TAG, "Launch live activity");
                 Utils.LaunchActivity(this, TeamLiveActivity.class, bundle_team);
+                break;
+
+            case R.id.button_team_bet_history :
+                Log.d(TAG, "Launch live activity");
+                Utils.LaunchActivity(this, TeamBetHistoryActivity.class, bundle_team);
                 break;
 
             case R.id.button_online_bets :

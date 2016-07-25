@@ -10,8 +10,8 @@ import org.parceler.Parcel;
 @Parcel
 public class Action {
 
-    public String id;
-    public String idMatch;
+    public int id;
+    public int idMatch;
     public String idScorer;
     public String time;
     public String photo;
@@ -23,19 +23,19 @@ public class Action {
     ///////////////////////////////////////////////////////////////////////
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getIdMatch() {
+    public int getIdMatch() {
         return idMatch;
     }
 
-    public void setIdMatch(String idMatch) {
+    public void setIdMatch(int idMatch) {
         this.idMatch = idMatch;
     }
 

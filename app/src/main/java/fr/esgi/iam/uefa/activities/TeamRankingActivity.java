@@ -25,7 +25,6 @@ import fr.esgi.iam.uefa.fragments.ranking.StrikersPassersFragment;
 public class TeamRankingActivity extends AppCompatActivity {
 
     private static final String TAG = TeamRankingActivity.class.getSimpleName();
-
     private Context mContext = null;
 
     private View rootView = null;

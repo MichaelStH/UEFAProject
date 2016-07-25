@@ -6,28 +6,28 @@ import org.parceler.Parcel;
  * Created by MichaelWayne on 28/04/2016.
  */
 @Parcel
-public class Matches {
+public class Match {
 
-    public String id;
+    public int id;
     public String date;
     public String time;
-    public String idTeam1;
-    public String idTeam2;
-    public String goalTeam1;
-    public String goalTeam2;
+    public int idTeam1;
+    public int idTeam2;
+    public int goalsTeam1;
+    public int goalsTeam2;
     public String score;
-    public String idStade;
+    public int idStadium;
 
     ///////////////////////////////////////////////////////////////////////
     ////////////////////  GETTER & SETTER  //////////////////////////
     ///////////////////////////////////////////////////////////////////////
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -47,36 +47,36 @@ public class Matches {
         this.time = time;
     }
 
-    public String getIdTeam1() {
+    public int getIdTeam1() {
         return idTeam1;
     }
 
-    public void setIdTeam1(String idTeam1) {
+    public void setIdTeam1(int idTeam1) {
         this.idTeam1 = idTeam1;
     }
 
-    public String getIdTeam2() {
+    public int getIdTeam2() {
         return idTeam2;
     }
 
-    public void setIdTeam2(String idTeam2) {
+    public void setIdTeam2(int idTeam2) {
         this.idTeam2 = idTeam2;
     }
 
-    public String getGoalTeam1() {
-        return goalTeam1;
+    public int getGoalsTeam1() {
+        return goalsTeam1;
     }
 
-    public void setGoalTeam1(String goalTeam1) {
-        this.goalTeam1 = goalTeam1;
+    public void setGoalsTeam1(int goalsTeam1) {
+        this.goalsTeam1 = goalsTeam1;
     }
 
-    public String getGoalTeam2() {
-        return goalTeam2;
+    public int getGoalsTeam2() {
+        return goalsTeam2;
     }
 
-    public void setGoalTeam2(String goalTeam2) {
-        this.goalTeam2 = goalTeam2;
+    public void setGoalsTeam2(int goalsTeam2) {
+        this.goalsTeam2 = goalsTeam2;
     }
 
     public String getScore() {
@@ -87,12 +87,12 @@ public class Matches {
         this.score = score;
     }
 
-    public String getIdStade() {
-        return idStade;
+    public int getIdStadium() {
+        return idStadium;
     }
 
-    public void setIdStade(String idStade) {
-        this.idStade = idStade;
+    public void setIdStadium(int idStadium) {
+        this.idStadium = idStadium;
     }
 
 }

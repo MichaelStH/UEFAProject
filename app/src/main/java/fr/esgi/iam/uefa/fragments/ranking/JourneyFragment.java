@@ -20,7 +20,7 @@ import java.util.List;
 import fr.esgi.iam.uefa.R;
 import fr.esgi.iam.uefa.adapter.ranking.JourneyListAdapter;
 import fr.esgi.iam.uefa.app.MyApplication;
-import fr.esgi.iam.uefa.model.Matches;
+import fr.esgi.iam.uefa.model.Match;
 import fr.esgi.iam.uefa.model.Team;
 import fr.esgi.iam.uefa.utils.DeviceManagerUtils;
 import fr.esgi.iam.uefa.utils.Utils;
@@ -83,9 +83,9 @@ public class JourneyFragment extends Fragment {
                     }
 
 
-                    MyApplication.getUefaRestClient().getApiService().getMatches(new Callback<List<Matches>>() {
+                    MyApplication.getUefaRestClient().getApiService().getMatches(new Callback<List<Match>>() {
                         @Override
-                        public void success(List<Matches> matches, Response response) {
+                        public void success(List<Match> matches, Response response) {
 
                             //create the adapter
                             journeyListAdapter = new JourneyListAdapter(mContext, matches, teamMapList);

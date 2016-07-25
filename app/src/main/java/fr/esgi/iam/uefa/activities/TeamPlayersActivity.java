@@ -18,6 +18,7 @@ import fr.esgi.iam.uefa.R;
 import fr.esgi.iam.uefa.adapter.players.PlayerListAdapter;
 import fr.esgi.iam.uefa.app.MyApplication;
 import fr.esgi.iam.uefa.model.Player;
+import fr.esgi.iam.uefa.model.Team;
 import fr.esgi.iam.uefa.utils.DeviceManagerUtils;
 import fr.esgi.iam.uefa.utils.DividerItemDecoration;
 import fr.esgi.iam.uefa.utils.Utils;
@@ -44,6 +45,8 @@ public class TeamPlayersActivity extends AppCompatActivity {
     //Data
     private List<Player> playerList = new ArrayList<>();
 
+    private Team bundle_team;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,12 @@ public class TeamPlayersActivity extends AppCompatActivity {
 
         //Initialize  the view
         initViews();
+
+
+        Bundle extras = getIntent().getExtras();
+        if ( null != extras ) {
+            bundle_team = extras.getParcelable( MyApplication.TEAM_NATION_ARG );
+        }
 
         //Test the internet's connection
         if( !DeviceManagerUtils.isConnected(mContext) ) {
@@ -71,9 +80,9 @@ public class TeamPlayersActivity extends AppCompatActivity {
                 public void success(List<Player> players, Response response) {
 
                     for ( Player player : players ) {
-                        if ( player.getIdTeam( ).equals("1") ) {
+                        if ( player.getIdTeam( ).equals( String.valueOf( bundle_team.getId( ) ) ) ) {
 
-                            Log.d( "OHOH - test", "nom du joueur : " + player.getSurname() );
+                            Log.d( "test", "nom du joueur : " + player.getSurname() );
 
                             playerList.add(player);
                         }

@@ -49,13 +49,15 @@
     </string-array>
 
     <!-- Team Home -->
+    <string name="disconnection">Déconnexion</string>
+    <string name="change_team">Changer d\'équipe</string>
     <string name="hint_team_name">Nom de l\'équipe favorite</string>
     <string name="history">Histoire</string>
     <string name="players">Effectif</string>
     <string name="ranking">Classement</string>
     <string name="live">Live!</string>
+    <string name="bet_history">Historique des paris</string>
     <string name="bet">Paris en ligne</string>
-    <string name="change_team">Changer d\'équipe</string>
 
 
     <!-- Team History -->
@@ -99,7 +101,6 @@
         <item>9</item>
         <item>10</item>
     </string-array>
-
     <string name="money_bet">Somme misée</string>
     <string name="bet_button">Parier</string>
 

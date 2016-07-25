@@ -1,12 +1,15 @@
 package fr.esgi.iam.uefa.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by MichaelWayne on 24/07/2016.
  */
 public class BetResponse {
 
-    public Bet bet;
     public int code;
+    public Bet bet;
+    public ArrayList<Bet> bets;
     public String error;
 
     public Bet getBet() {
@@ -15,6 +18,14 @@ public class BetResponse {
 
     public void setBet(Bet bet) {
         this.bet = bet;
+    }
+
+    public ArrayList<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(ArrayList<Bet> bets) {
+        this.bets = bets;
     }
 
     public int getCode() {

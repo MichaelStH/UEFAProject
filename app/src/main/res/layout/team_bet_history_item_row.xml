@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/team_bet_history_id_textView_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="id  : 9"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/team_bet_history_credits_wagered_textView_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Credits misés : "
+        android:textSize="20sp"/>
+
+</LinearLayout>

@@ -25,7 +25,6 @@ import retrofit.client.Response;
 public class TeamHistoryActivity extends AppCompatActivity {
 
     private static final String TAG = TeamHistoryActivity.class.getSimpleName();
-
     private Context mContext = null;
 
     private View rootView = null;
@@ -55,7 +54,7 @@ public class TeamHistoryActivity extends AppCompatActivity {
 
         }
         else {
-            MyApplication.getUefaRestClient().getApiService().getTeam(Integer.valueOf(bundle_team.getId()), new Callback<List<Team>>() {
+            MyApplication.getUefaRestClient().getApiService().getTeam(bundle_team.getId(), new Callback<List<Team>>() {
 
                 @Override
                 public void success(List<Team> teams, Response response) {
