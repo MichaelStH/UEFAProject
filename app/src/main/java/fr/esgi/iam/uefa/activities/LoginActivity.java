@@ -156,18 +156,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     if ( null != userResponse.getError() ) {
                         Log.e(TAG, "Error : " + userResponse.getError());
+                        Utils.dismissLoader(mProgressBar);
                         Toast.makeText(mContext, userResponse.getError(), Toast.LENGTH_SHORT).show();
                     }else {
 
 //                        Log.e(TAG, "test token got : " + userResponse.getUser().getToken());
                         saveUserUIDAndToken( userResponse.getUser().getUid(), userResponse.getUser().getToken() );
-//                        Log.i(TAG, "Launch activity");
-
-                        //Verify if the progressBar is showed
-                        if (mProgressBar.isInLayout()) {
-                            //Hide the progressBar
-                            mProgressBar.setVisibility(View.GONE);
-                        }
+                        Utils.dismissLoader(mProgressBar);
 
                         if( MyApplication.TEAM_IS_CHOSEN ){
                             Log.e(TAG, "teamAlreadyChosen launch home");
@@ -191,12 +186,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             finish();
                         } else {
 
-                            //Verify if the progressBar is showed
-                            if (null != mProgressBar) {
-                                //Hide the progressBar
-                                mProgressBar.setVisibility(View.GONE);
-                            }
-
+                            Utils.dismissLoader(mProgressBar);
                             Toast.makeText(mContext, "Veuillez vous enregistrer pour accéder au contenu de cette application", Toast.LENGTH_SHORT).show();
 
                         }

@@ -2,22 +2,15 @@ package fr.esgi.iam.uefa.adapter.bet;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import fr.esgi.iam.uefa.R;
 import fr.esgi.iam.uefa.model.Bet;
-import fr.esgi.iam.uefa.model.Player;
 
 /**
  * Created by MichaelWayne on 25/07/2016.

@@ -1,9 +1,10 @@
 package fr.esgi.iam.uefa.activities;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,8 +28,7 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
     private static final String TAG = TeamHomeActivity.class.getSimpleName();
     private Context mContext = null;
 
-    private View rootView = null;
-    private Button teamHistoryButton, teamPlayersButton, teamRankingButton, teamLiveEventsButton, teamBetHistoryButton, teamBetButton, changeTeamButton;
+    private Button teamHistoryButton, teamPlayersButton, teamRankingButton, teamLiveEventsButton, teamBetHistoryButton, teamBetButton, disconnectionButton, changeTeamButton;
     private TextView mTvHome;
     private ImageView mImgHome;
 
@@ -94,6 +94,7 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
         teamBetHistoryButton = (Button) findViewById(R.id.button_team_bet_history);
         teamBetButton = (Button) findViewById(R.id.button_online_bets);
 
+        disconnectionButton = (Button) findViewById(R.id.button_disconnect_user);
         changeTeamButton = (Button) findViewById(R.id.button_change_team);
         Log.i(TAG, "Views successfully initialized");
     }
@@ -105,6 +106,7 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
         teamLiveEventsButton.setOnClickListener(this);
         teamBetHistoryButton.setOnClickListener(this);
         teamBetButton.setOnClickListener(this);
+        disconnectionButton.setOnClickListener(this);
         changeTeamButton.setOnClickListener( this );
     }
 
@@ -117,6 +119,10 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
         id = view.getId();
 
         switch (id){
+
+            case R.id.button_disconnect_user:
+                showAlertDialog();
+                break;
 
             case R.id.button_change_team:
                 Log.d(TAG, "Team Selection activity");
@@ -158,4 +164,54 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
     }
+
+    /**
+     * Build an alert dialog to ask the user if he wants to disconnect his account from the app
+     */
+    private void showAlertDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
+
+        // set title
+        alertDialogBuilder.setTitle("Déconnexion");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Etes-vous sûr de vouloir vous déconnecter ?")
+                .setCancelable(false)
+                .setPositiveButton("Oui",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        eraseSharedData();
+                        Utils.LaunchActivity(mContext, LoginActivity.class);
+                        TeamHomeActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("Non",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+    /**
+     * Erase data previously saved in shared preferences (token and uid)
+     */
+    private void eraseSharedData(){
+        SharedPreferences sharedPref = getSharedPreferences( MyApplication.USER_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putString( MyApplication.USER_UID_ARG, "" );
+        editor.putString( MyApplication.USER_TOKEN_ARG, "" );
+        editor.apply();
+    }
 }
+

@@ -26,6 +26,7 @@ import java.util.List;
 import fr.esgi.iam.uefa.R;
 import fr.esgi.iam.uefa.app.MyApplication;
 import fr.esgi.iam.uefa.helper.RetrofitHelper;
+import fr.esgi.iam.uefa.model.Bet;
 import fr.esgi.iam.uefa.model.BetResponse;
 import fr.esgi.iam.uefa.model.Match;
 import fr.esgi.iam.uefa.model.Team;
@@ -235,7 +236,10 @@ public class TeamBetActivity extends AppCompatActivity implements AdapterView.On
                             Toast.makeText(mContext, betResponse.getError(), Toast.LENGTH_SHORT).show();
                         }
 
-                        //TODO: inform the user that his bet has successfully been taken
+                        Bet bet = betResponse.getBets();
+
+                        Log.e(TAG, "Result : " + bet.getCreditsWagered());
+                        Utils.showActionInToast( mContext, "Votre pari a bien été enregistré" );
                     }
                 }
 

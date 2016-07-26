@@ -20,7 +20,7 @@ import fr.esgi.iam.uefa.R;
 import fr.esgi.iam.uefa.adapter.bet.BetHistoryListAdapter;
 import fr.esgi.iam.uefa.app.MyApplication;
 import fr.esgi.iam.uefa.model.Bet;
-import fr.esgi.iam.uefa.model.BetResponse;
+import fr.esgi.iam.uefa.model.BetArrayResponse;
 import fr.esgi.iam.uefa.utils.DeviceManagerUtils;
 import fr.esgi.iam.uefa.utils.DividerItemDecoration;
 import fr.esgi.iam.uefa.utils.Utils;
@@ -65,9 +65,9 @@ public class TeamBetHistoryActivity extends AppCompatActivity {
 
         }
         else {
-            MyApplication.getUefaRestClient().getApiService().getUserBetsList(sharedPrefUserUID, new Callback<BetResponse>() {
+            MyApplication.getUefaRestClient().getApiService().getUserBetsList(sharedPrefUserUID, new Callback<BetArrayResponse>() {
                 @Override
-                public void success(BetResponse betResponse, Response response) {
+                public void success(BetArrayResponse betResponse, Response response) {
                     if ( ! ( 200 == response.getStatus() ) ){
                         Log.e( TAG, "Another code occurred : " + response.getStatus());
                     }else{

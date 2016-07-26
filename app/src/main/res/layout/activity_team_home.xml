@@ -6,14 +6,30 @@
     android:orientation="vertical"
     tools:context=".activites.TeamHomeActivity">
 
-    <Button
-        android:id="@+id/button_change_team"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="8dp"
-        android:text="@string/change_team"
-        style="@android:style/Widget.Material.Light.Button.Borderless"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/button_disconnect_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_margin="8dp"
+            android:text="@string/disconnection"
+            style="@android:style/Widget.Material.Light.Button.Borderless"/>
+
+        <Button
+            android:id="@+id/button_change_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="8dp"
+            android:text="@string/change_team"
+            style="@android:style/Widget.Material.Light.Button.Borderless"/>
+
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/team_home_title_header"

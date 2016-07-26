@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.esgi.iam.uefa.model.Action;
 import fr.esgi.iam.uefa.model.Article;
-import fr.esgi.iam.uefa.model.Bet;
+import fr.esgi.iam.uefa.model.BetArrayResponse;
 import fr.esgi.iam.uefa.model.BetResponse;
 import fr.esgi.iam.uefa.model.Match;
 import fr.esgi.iam.uefa.model.Player;
@@ -61,6 +61,6 @@ public interface UefaApiService {
     void createBet(@Field("token") String userToken, @Field("idMatch") int idMatch, @Field("creditsWagered") int creditsWagered, @Field("scoreTeam1") int scoreTeam1, @Field("scoreTeam2") int scoreTeam2, Callback<BetResponse> callback);
 
     @GET("/api/bets/")
-    void getUserBetsList(@Query("uid") String userUID,  Callback<BetResponse> cb);
+    void getUserBetsList(@Query("uid") String userUID,  Callback<BetArrayResponse> cb);
 
 }
