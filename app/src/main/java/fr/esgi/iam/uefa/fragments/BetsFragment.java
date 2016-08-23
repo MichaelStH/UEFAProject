@@ -1,11 +1,12 @@
-package fr.esgi.iam.uefa.activities;
+package fr.esgi.iam.uefa.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,16 +38,16 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
- * Created by MichaelWayne on 23/07/2016.
+ * Created by MichaelWayne on 23/08/2016.
  */
-public class TeamBetActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class BetsFragment extends Fragment  implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     //TAG & Context
-    private static final String TAG = TeamBetActivity.class.getSimpleName();
+    private static final String TAG = BetsFragment.class.getSimpleName();
+    public static BetsFragment instance;
     public static Context mContext = null;
 
     //Views
-    private View rootView;
     private static Spinner teamMatchSpinner;
     private Spinner teamScore1Spinner;
     private Spinner teamScore2Spinner;
@@ -61,49 +62,65 @@ public class TeamBetActivity extends AppCompatActivity implements AdapterView.On
 
     private ArrayList<String> matchesInfosList;
 
+
+    public static Fragment newInstance(){
+        BetsFragment fragment = new BetsFragment();
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_team_bet);
 
-        mContext = TeamBetActivity.this;
+        mContext = getActivity();
+        instance = BetsFragment.this;
+    }
 
-        initViews();
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_bets, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initViews(view);
 
         //Test the internet's connection
         if( !DeviceManagerUtils.isConnected(mContext) ) {
 
             Utils.showActionInToast(mContext, mContext.getResources().getString( R.string.no_internet_connection ) );
-            getLayoutInflater().inflate(R.layout.no_connection_layout, (ViewGroup) rootView);
+            getLayoutInflater(savedInstanceState).inflate(R.layout.no_connection_layout, (ViewGroup) view);
 
         }
         else {
             loadAvailableMatches();
         }
-
     }
 
-    private void initViews(){
-        rootView = getWindow().getDecorView();
 
-        teamMatchSpinner = (Spinner) findViewById(R.id.team_bet_team_match);
-        teamScore1Spinner = (Spinner) findViewById(R.id.team_bet_score_team_1_spinner);
-        teamScore2Spinner = (Spinner) findViewById(R.id.team_bet_score_team_2_spinner);
+    private void initViews(View view){
 
-        moneyEditText = (EditText) findViewById(R.id.team_bet_money_editText);
+        teamMatchSpinner = (Spinner) view.findViewById(R.id.team_bet_team_match);
+        teamScore1Spinner = (Spinner) view.findViewById(R.id.team_bet_score_team_1_spinner);
+        teamScore2Spinner = (Spinner) view.findViewById(R.id.team_bet_score_team_2_spinner);
 
-        betButton = (Button) findViewById(R.id.team_bet_button);
+        moneyEditText = (EditText) view.findViewById(R.id.team_bet_money_editText);
+
+        betButton = (Button) view.findViewById(R.id.team_bet_button);
 
         if ( betButton != null )
-            betButton.setOnClickListener( TeamBetActivity.this );
+            betButton.setOnClickListener( BetsFragment.this );
     }
 
     /**
      * Make REST call to get matches and teams
      */
     public void loadAvailableMatches(){
-//        RetrofitHelper.getTeams((TeamBetActivity) mContext);
-//        RetrofitHelper.getMatches((TeamBetActivity) mContext);
+        RetrofitHelper.getTeams((BetsFragment) instance);
+        RetrofitHelper.getMatches((BetsFragment) instance);
     }
 
     public void onDataLoaded( List<Match> matches, List<Team> teams ){
@@ -113,23 +130,26 @@ public class TeamBetActivity extends AppCompatActivity implements AdapterView.On
 
         matchesInfosList = getAvailableMatches();
 
-        teamMatchSpinner.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_dropdown_item, matchesInfosList));
-        teamMatchSpinner .setOnItemSelectedListener( this );
+        if ( matchesInfosList != null && matchesInfosList.size() > 0 ){
+            Log.e("OHOH", "this is good");
 
+            teamMatchSpinner.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_dropdown_item, matchesInfosList));
+            teamMatchSpinner .setOnItemSelectedListener( this );
+        }
     }
 
     /**
      * Old code
      *
-    boolean canBetOnMatch( String szCurrentDate, String szMatchDate ) {
+     boolean canBetOnMatch( String szCurrentDate, String szMatchDate ) {
 
-        // Doivent être sous format 2016-01-30
-        szMatchDate = szMatchDate.replaceAll( "-", "" );
-        szCurrentDate = szCurrentDate.replaceAll( "-", "" );
+     // Doivent être sous format 2016-01-30
+     szMatchDate = szMatchDate.replaceAll( "-", "" );
+     szCurrentDate = szCurrentDate.replaceAll( "-", "" );
 
-        return ( Integer.parseInt( szCurrentDate ) <= Integer.parseInt( szMatchDate ) );
-    }
-    */
+     return ( Integer.parseInt( szCurrentDate ) <= Integer.parseInt( szMatchDate ) );
+     }
+     */
 
     public ArrayList<String> getAvailableMatches(  ) {
         String szTeam1, szTeam2;
@@ -215,7 +235,7 @@ public class TeamBetActivity extends AppCompatActivity implements AdapterView.On
 
 //        Log.e(TAG, "button click");
 
-        SharedPreferences sharedPref = getSharedPreferences( MyApplication.USER_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
+        SharedPreferences sharedPref = mContext.getSharedPreferences( MyApplication.USER_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
         userToken = sharedPref.getString( MyApplication.USER_TOKEN_ARG, "" );
 
         if ( moneyEditText.getText().toString().isEmpty() ){

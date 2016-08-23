@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import fr.esgi.iam.uefa.activities.LoginActivity;
 import fr.esgi.iam.uefa.activities.TeamHomeActivity;
+import fr.esgi.iam.uefa.activities.TeamMainActivity;
 import fr.esgi.iam.uefa.activities.TeamSelectionActivity;
 import fr.esgi.iam.uefa.app.MyApplication;
 import fr.esgi.iam.uefa.model.UserResponse;
@@ -135,7 +136,8 @@ public class SplashActivity extends AppCompatActivity {
                         }
 
                         //Launch home activity
-                        Intent intent = new Intent(SplashActivity.this, TeamHomeActivity.class);
+                        //Temp
+                        Intent intent = new Intent(SplashActivity.this, TeamMainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
@@ -148,6 +150,7 @@ public class SplashActivity extends AppCompatActivity {
                     Log.e(TAG, "RetrofitError : " + error.getMessage());
                 }
             });
+
         }
     }
 }

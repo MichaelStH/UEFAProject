@@ -8,6 +8,7 @@ import java.util.List;
 
 import fr.esgi.iam.uefa.activities.TeamBetActivity;
 import fr.esgi.iam.uefa.app.MyApplication;
+import fr.esgi.iam.uefa.fragments.BetsFragment;
 import fr.esgi.iam.uefa.model.Match;
 import fr.esgi.iam.uefa.model.Team;
 import retrofit.Callback;
@@ -30,7 +31,7 @@ public class RetrofitHelper {
     private RetrofitHelper(){}
 
 
-    public static void getMatches(final TeamBetActivity context){
+    public static void getMatches(final BetsFragment context){
 
         MyApplication.getUefaRestClient().getApiService().getMatches(new Callback<List<Match>>() {
             @Override
@@ -57,7 +58,7 @@ public class RetrofitHelper {
     }
 
 
-    public static void getTeams(final TeamBetActivity context ){
+    public static void getTeams(final BetsFragment context ){
 
         MyApplication.getUefaRestClient().getApiService().getTeams(new Callback<List<Team>>() {
             @Override

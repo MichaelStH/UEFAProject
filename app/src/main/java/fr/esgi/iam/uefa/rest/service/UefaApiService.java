@@ -38,11 +38,11 @@ public interface UefaApiService {
     @GET("/api/users/")
     void changeUserPassword(boolean isUpdateRequestMethod, String userToken, String newPassword, String password);
 
-    @GET("/api/action/")
-    void getActions(Callback<List<Action>> cb);
-
     @GET("/api/articles/")
     void getArticles(Callback<List<Article>> cb);
+
+    @GET("/api/action/")
+    void getActions(Callback<List<Action>> cb);
 
     @GET("/api/teams/")
     void getTeams(Callback<List<Team>> cb);

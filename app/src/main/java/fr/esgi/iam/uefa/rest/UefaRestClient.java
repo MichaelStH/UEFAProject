@@ -17,7 +17,7 @@ public class UefaRestClient {
     private static final String TAG = UefaRestClient.class.getSimpleName();
 
     //BASE_ENDPOINT to fetch
-    public static final String BASE_ENDPOINT = "http://dylan.absil.pro/projet";
+    public static final String BASE_ENDPOINT = "http://dylan.absil.pro/projet/";
 
     public UefaApiService apiService;
 

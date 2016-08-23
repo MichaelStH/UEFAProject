@@ -37,6 +37,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"/>
 
 
+        <activity android:name=".activities.TeamMainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+
         <activity android:name=".activities.TeamHomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
 

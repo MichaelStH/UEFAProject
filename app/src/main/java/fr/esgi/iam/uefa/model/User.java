@@ -1,9 +1,12 @@
 package fr.esgi.iam.uefa.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by MichaelWayne on 23/07/2016.
  */
-public class User {
+public class User implements Parcelable {
 
     public String id;
     public String uid;
@@ -17,6 +20,42 @@ public class User {
         this.password = password;
     }
 
+
+    protected User(Parcel in) {
+        id = in.readString();
+        uid = in.readString();
+        login = in.readString();
+        password = in.readString();
+        token = in.readString();
+        credits = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(uid);
+        dest.writeString(login);
+        dest.writeString(password);
+        dest.writeString(token);
+        dest.writeString(credits);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getId() {
         return id;

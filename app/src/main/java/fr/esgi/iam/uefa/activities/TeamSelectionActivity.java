@@ -129,7 +129,7 @@ public class TeamSelectionActivity extends AppCompatActivity implements AdapterV
 
                     Team teamChosen = (Team) mCountryAdapter.getItem(position);
 
-                    Intent intent = new Intent(mContext, TeamHomeActivity.class);
+                    Intent intent = new Intent(mContext, TeamMainActivity.class);
 
                     //Build the bundle to send to the other activity
                     intent.putExtra( MyApplication.TEAM_NATION_ARG, teamChosen );
