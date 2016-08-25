@@ -48,10 +48,6 @@ public class TeamMainActivity extends AppCompatActivity implements NavigationVie
     private static final String TAG = TeamMainActivity.class.getSimpleName();
     private Context mContext = null;
 
-    private Button disconnectionButton, changeTeamButton;
-    private ImageView mImgHome = null;
-    private TextView mTvHome = null;
-
     private Team bundle_team;
 
     public static final String USERNAME_ARG = "username";
@@ -65,6 +61,8 @@ public class TeamMainActivity extends AppCompatActivity implements NavigationVie
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        mContext = this;
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -77,9 +75,6 @@ public class TeamMainActivity extends AppCompatActivity implements NavigationVie
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mImgHome = (ImageView) findViewById(R.id.mainThumbImageView);
-        mTvHome = (TextView) findViewById(R.id.mainTeamTextView);
-
         if (savedInstanceState == null){
 
             Fragment fragment = ArticleFragment.newInstance();
@@ -91,21 +86,12 @@ public class TeamMainActivity extends AppCompatActivity implements NavigationVie
                     .commit();
         }
 
-        try {
-            fillNavigationViewHeader();
-        }catch (NullPointerException|IllegalStateException exception){
-            exception.printStackTrace();
-        }
-
+        fillNavigationViewHeader();
 
         navigationView.getMenu().getItem(0).setChecked(true);
     }
 
-
     private void fillNavigationViewHeader() throws NullPointerException, IllegalStateException{
-
-        if ( mImgHome != null && mTvHome != null )
-            Log.e("OHOH", "Test views : " + mImgHome.toString() +  " | " + mTvHome.toString() );
 
         Bundle extras = getIntent().getExtras();
         if (extras == null)
@@ -121,13 +107,15 @@ public class TeamMainActivity extends AppCompatActivity implements NavigationVie
 
             Log.e("OHOH", "Debug : " + bundle_team.getName());
 
+            /*
             if (bundle_team != null){
                 mTvHome.setText(bundle_team.getName());
                 Picasso.with(this)
                         .load(UefaRestClient.BASE_ENDPOINT + "/" + bundle_team.getFlag())
+                        .noFade()
                         .into(mImgHome);
             }
-
+            */
             return;
         }
         else
@@ -138,15 +126,16 @@ public class TeamMainActivity extends AppCompatActivity implements NavigationVie
             //Debug check
             Log.e(TAG, "Bundle not null");
 
-
+            /*
             //Fill the views
             mTvHome.setText( bundle_team.getName() );
             Picasso.with(this)
                     .load(UefaRestClient.BASE_ENDPOINT + "/" + bundle_team.getFlag())
+                    .noFade()
                     .into(mImgHome);
 
             Log.d(TAG, "Bundle Image loaded");
-
+            */
         }
     }
 

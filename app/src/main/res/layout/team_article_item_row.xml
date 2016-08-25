@@ -26,15 +26,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="@dimen/activity_horizontal_margin">
 
                 <TextView
                     android:id="@+id/title_item"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5"
-                    android:maxLines="1"
+                    android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     tools:text="name"/>
@@ -42,9 +39,7 @@
                 <TextView
                     android:id="@+id/content_item"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:maxLines="2"
+                    android:layout_height="wrap_content"
                     android:hint="description"/>
 
             </LinearLayout>

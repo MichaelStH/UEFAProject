@@ -58,7 +58,7 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener{
     private ProgressBar mLoader;
     private RecyclerView contentRecyclerView;
 
-    private Team bundle_team;
+    private Team bundle_team = null;
 
     private BetHistoryListAdapter teamBetHistoryListAdapter;
     //Data
@@ -105,7 +105,7 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener{
 
             loadUserInfos(view, savedInstanceState);
             loadTeamInfos();
-            //loadUsersBetHistory(view, savedInstanceState);
+            loadUsersBetHistory(view, savedInstanceState);
         }catch (NullPointerException exception){
             exception.printStackTrace();
         }
@@ -186,6 +186,11 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener{
 
     private void loadTeamInfos(){
 
+
+        Bundle args = this.getArguments();
+        if (args != null)
+            bundle_team = args.getParcelable( MyApplication.TEAM_NATION_ARG );
+
         //Fill the views
         teamNameTextView.setText( bundle_team.getName() );
         Picasso.with(mContext)
@@ -211,6 +216,11 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener{
                     if ( ! ( 200 == response.getStatus() ) ){
                         Log.e( TAG, "Another code occurred : " + response.getStatus());
                     }else{
+
+                        if (betResponse.getBets() == null){
+                            Utils.dismissLoader(mLoader);
+                            return;
+                        }
 
                         for ( Bet bet : betResponse.getBets() ){
                                 betList.add( bet );

@@ -1,13 +1,10 @@
 package fr.esgi.iam.uefa.adapter.article;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import java.util.List;
 
 import fr.esgi.iam.uefa.R;
@@ -16,7 +13,7 @@ import fr.esgi.iam.uefa.model.Article;
 /**
  * Created by MichaelWayne on 21/08/2016.
  */
-public class ArticleAdapter  extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
+public class ArticleAdapter  extends RecyclerView.Adapter<ViewHolder> {
 
     private Context context;
     private LayoutInflater inflater;
@@ -29,27 +26,6 @@ public class ArticleAdapter  extends RecyclerView.Adapter<ArticleAdapter.ViewHol
         this.articleList = articleList;
 
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public CardView cardView;
-        public TextView item_title, item_content;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            cardView = (CardView) view.findViewById(R.id.card_view_item);
-
-            item_title = (TextView) view.findViewById(R.id.title_item);
-            item_content = (TextView) view.findViewById(R.id.content_item);
-        }
-
-        public void bind(Article itemArticle) {
-
-            item_title.setText(itemArticle.getTitle());
-            item_content.setText(itemArticle.getContent());
-        }
     }
 
     @Override
@@ -69,6 +45,6 @@ public class ArticleAdapter  extends RecyclerView.Adapter<ArticleAdapter.ViewHol
 
         Article itemArticle = articleList.get( position );
 
-        holder.bind( itemArticle );;
+        holder.bind( itemArticle );
     }
 }
