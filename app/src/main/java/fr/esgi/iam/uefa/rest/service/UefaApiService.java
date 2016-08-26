@@ -56,6 +56,9 @@ public interface UefaApiService {
     @GET("/api/matches/")
     void getMatches(Callback<List<Match>> cb);
 
+    @GET("/api/matches/")
+    void getMatches(@Query("id") int id , Callback<List<Match>> cb);
+
     @FormUrlEncoded
     @POST("/api/bets/")
     void createBet(@Field("token") String userToken, @Field("idMatch") int idMatch, @Field("creditsWagered") int creditsWagered, @Field("scoreTeam1") int scoreTeam1, @Field("scoreTeam2") int scoreTeam2, Callback<BetResponse> callback);

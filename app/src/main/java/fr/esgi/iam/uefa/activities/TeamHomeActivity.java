@@ -150,11 +150,6 @@ public class TeamHomeActivity extends AppCompatActivity implements View.OnClickL
                 Utils.LaunchActivity(this, TeamLiveActivity.class, bundle_team);
                 break;
 
-            case R.id.button_team_bet_history :
-                Log.d(TAG, "Launch live activity");
-                Utils.LaunchActivity(this, TeamBetHistoryActivity.class, bundle_team);
-                break;
-
             case R.id.button_online_bets :
                 Log.d(TAG, "Launch live activity");
                 Utils.LaunchActivity(this, TeamBetActivity.class, bundle_team);

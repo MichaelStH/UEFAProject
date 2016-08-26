@@ -22,12 +22,14 @@ public class BetHistoryListAdapter  extends RecyclerView.Adapter<BetHistoryListA
     private Context context;
     private LayoutInflater inflater;
 
+    private List<String> teamsList;
     private List<Bet> betList;
 
-    public BetHistoryListAdapter(Context context, List<Bet> betList) {
+    public BetHistoryListAdapter(Context context, List<Bet> betList, List<String> teamsList) {
 
         this.context = context;
         this.betList = betList;
+        this.teamsList = teamsList;
 
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -65,8 +67,9 @@ public class BetHistoryListAdapter  extends RecyclerView.Adapter<BetHistoryListA
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         Bet itemBet = betList.get(position);
+        String itemTeam = teamsList.get(position);
 
-        holder.idTextView.setText("id Match : " + itemBet.getId());
+        holder.idTextView.setText("Match : " + itemTeam);
         holder.creditWageredTextView.setText("Crédits misés : " + itemBet.getCreditsWagered());
     }
 

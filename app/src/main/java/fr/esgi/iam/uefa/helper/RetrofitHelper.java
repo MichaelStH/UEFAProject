@@ -9,6 +9,7 @@ import java.util.List;
 import fr.esgi.iam.uefa.activities.TeamBetActivity;
 import fr.esgi.iam.uefa.app.MyApplication;
 import fr.esgi.iam.uefa.fragments.BetsFragment;
+import fr.esgi.iam.uefa.fragments.ProfileFragment;
 import fr.esgi.iam.uefa.model.Match;
 import fr.esgi.iam.uefa.model.Team;
 import retrofit.Callback;
@@ -81,6 +82,6 @@ public class RetrofitHelper {
                 Log.e(TAG, "RetrofitError : " + error.getMessage());
             }
         });
-
     }
+
 }

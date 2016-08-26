@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -31,6 +32,7 @@ import fr.esgi.iam.uefa.model.Bet;
 import fr.esgi.iam.uefa.model.BetResponse;
 import fr.esgi.iam.uefa.model.Match;
 import fr.esgi.iam.uefa.model.Team;
+import fr.esgi.iam.uefa.model.UserResponse;
 import fr.esgi.iam.uefa.utils.DeviceManagerUtils;
 import fr.esgi.iam.uefa.utils.Utils;
 import retrofit.Callback;
@@ -52,6 +54,7 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
     private Spinner teamScore1Spinner;
     private Spinner teamScore2Spinner;
     private EditText moneyEditText;
+    private TextView creditsWageredTextView;
     private Button betButton;
 
     private static List<Match> matchesList = null;
@@ -97,6 +100,7 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
         }
         else {
             loadAvailableMatches();
+            getUserCredits();
         }
     }
 
@@ -109,10 +113,33 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
 
         moneyEditText = (EditText) view.findViewById(R.id.team_bet_money_editText);
 
+        creditsWageredTextView = (TextView) view.findViewById(R.id.team_bet_credits_wagered_textView);
+
         betButton = (Button) view.findViewById(R.id.team_bet_button);
 
         if ( betButton != null )
             betButton.setOnClickListener( BetsFragment.this );
+    }
+
+    private void getUserCredits(){
+        SharedPreferences sharedPref = mContext.getSharedPreferences( MyApplication.USER_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
+        String userToken = sharedPref.getString( MyApplication.USER_TOKEN_ARG, "" );
+
+        MyApplication.getUefaRestClient().getApiService().isUserConnected(userToken, new Callback<UserResponse>() {
+            @Override
+            public void success(UserResponse userResponse, Response response) {
+                if ( ! ( 200 == response.getStatus() ) ){
+                    Log.e( TAG, "Another code occurred : " + response.getStatus());
+                }else{
+                    creditsWageredTextView.setText(userResponse.getUser().getCredits());
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(TAG, error.getMessage());
+            }
+        });
     }
 
     /**
@@ -178,7 +205,7 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
                         matchesAvailable = new ArrayList<String>();
                     }
 
-                    matchesAvailable.add( match.getId() + ". " + szTeam1 + " VS " + szTeam2 + " (" + match.getDate() + " " + match.getTime() + ")" );
+                    matchesAvailable.add( /*match.getId() + ". " + */ szTeam1 + " VS " + szTeam2 + " (" + match.getDate() + " " + match.getTime() + ")" );
                 }
             }
         } catch (ParseException e) {
@@ -192,8 +219,8 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
         String szTeamName = null;
 
         for( Team team : teams ) {
-            if( team.id == idTeam ) {
-                szTeamName = team.name;
+            if( team.getId() == idTeam ) {
+                szTeamName = team.getName();
                 break;
             }
         }

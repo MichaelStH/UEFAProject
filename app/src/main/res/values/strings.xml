@@ -119,5 +119,6 @@
     </string-array>
     <string name="money_bet">Somme misée</string>
     <string name="bet_button">Parier</string>
+    <string name="credits_wagered">Crédits restants : </string>
 
 </resources>
