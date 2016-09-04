@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,11 +27,13 @@ import fr.esgi.iam.uefa.R;
 import fr.esgi.iam.uefa.activities.TeamSelectionActivity;
 import fr.esgi.iam.uefa.adapter.bet.BetHistoryListAdapter;
 import fr.esgi.iam.uefa.app.MyApplication;
+import fr.esgi.iam.uefa.fragments.profile.CustomDialogFragment;
 import fr.esgi.iam.uefa.helper.RetrofitHelper;
 import fr.esgi.iam.uefa.model.Bet;
 import fr.esgi.iam.uefa.model.BetArrayResponse;
 import fr.esgi.iam.uefa.model.Match;
 import fr.esgi.iam.uefa.model.Team;
+import fr.esgi.iam.uefa.model.User;
 import fr.esgi.iam.uefa.model.UserResponse;
 import fr.esgi.iam.uefa.rest.UefaRestClient;
 import fr.esgi.iam.uefa.utils.DeviceManagerUtils;
@@ -43,7 +46,7 @@ import retrofit.client.Response;
 /**
  * Created by MichaelWayne on 21/08/2016.
  */
-public class ProfileFragment extends Fragment  implements View.OnClickListener{
+public class ProfileFragment extends Fragment  implements View.OnClickListener, CustomDialogFragment.EditNameDialogListener {
 
     private static final String TAG = ProfileFragment.class.getSimpleName();
     public static ProfileFragment instance;
@@ -71,7 +74,8 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener{
     private List<Bet> betList = new ArrayList<>();
 
     private String sharedPrefUserUID;
-
+    private User user;
+    private String userNewPassword;
 
     public static Fragment newInstance( Team team ){
         ProfileFragment fragment = new ProfileFragment();
@@ -118,7 +122,7 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener{
             }else {
                 loadUserInfos();
                 loadTeamInfos();
-                loadAvailableMatches();
+                //loadAvailableMatches();
             }
 
         }catch (NullPointerException exception){
@@ -158,7 +162,9 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener{
                 if ( ! ( 200 == response.getStatus() ) ){
                     Log.e( TAG, "Another code occurred : " + response.getStatus());
                 }else{
-                    userLoginTextView.setText(userResponse.getUser().getLogin());
+
+                    user = userResponse.getUser();
+                    userLoginTextView.setText(user.getLogin());
                 }
             }
 
@@ -213,6 +219,7 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener{
     }
 
     private void loadUsersBetHistory() throws NullPointerException{
+
         getUserUIDFromSharedPrefs();
 
         MyApplication.getUefaRestClient().getApiService().getUserBetsList(sharedPrefUserUID, new Callback<BetArrayResponse>() {
@@ -244,7 +251,6 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener{
                                 }
 
                                 matchesAvailable.add( /*match.getId() + ". " + */ szTeam1 + " VS " + szTeam2 + " (" + match.get(0).getDate() + ")" );
-
 
                                 //create the adapter
                                 teamBetHistoryListAdapter = new BetHistoryListAdapter(mContext, betList, matchesAvailable);
@@ -304,6 +310,7 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener{
         switch (id){
 
             case R.id.button_change_user_password:
+                showEditDialog();
                 break;
 
             case R.id.button_change_team:
@@ -316,4 +323,31 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener{
         }
     }
 
+    private void requestChangeUserPassword(String newPassword){
+        String userToken = Utils.getUserToken(mContext);
+
+        MyApplication.getUefaRestClient().getApiService().changeUserPassword( true, userToken, newPassword, user.getPassword() );
+    }
+
+    // Call this method to launch the edit dialog
+    private void showEditDialog() {
+
+        FragmentManager fm = getFragmentManager();
+        CustomDialogFragment editNameDialogFragment = CustomDialogFragment.newInstance(user, "Changer de mot de passe");
+
+        // SETS the target fragment for use later when sending results
+        editNameDialogFragment.setTargetFragment(ProfileFragment.this, 300);
+        editNameDialogFragment.show(fm, "fragment_edit_name");
+    }
+
+    @Override
+    public void onFinishEditDialog(String inputText) {
+
+        if ( inputText == null)
+            return;
+        else{
+            userNewPassword = inputText;
+            requestChangeUserPassword(userNewPassword);
+        }
+    }
 }

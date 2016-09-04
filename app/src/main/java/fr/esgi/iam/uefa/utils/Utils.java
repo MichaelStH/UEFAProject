@@ -3,6 +3,7 @@ package fr.esgi.iam.uefa.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
@@ -57,5 +58,19 @@ public class Utils {
         else
             return false;
 
+    }
+
+    public static String getUserToken(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences( MyApplication.USER_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
+        String userToken = sharedPref.getString( MyApplication.USER_TOKEN_ARG, "" );
+
+        return userToken;
+    }
+
+    public static String getUserUIDFromSharedPrefs(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences( MyApplication.USER_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
+        String sharedPrefUserUID = sharedPref.getString( MyApplication.USER_UID_ARG, "" );
+
+        return sharedPrefUserUID;
     }
 }

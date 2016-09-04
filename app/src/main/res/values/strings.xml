@@ -34,6 +34,7 @@
     <string name="err_msg_password">Entrez un mot de passe</string>
     <string name="err_msg_email_length">Ce champs doit contenir entre 5 et 40 caractères</string>
     <string name="err_msg_password_length">Ce champs doit contenir entre 6 et 20 caractères</string>
+    <string name="validate">Valider</string>
 
     <!-- Team Selection -->
     <string-array name="countries">
