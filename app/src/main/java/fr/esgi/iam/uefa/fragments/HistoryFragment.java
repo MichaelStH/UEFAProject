@@ -4,12 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import fr.esgi.iam.uefa.R;
@@ -81,7 +83,7 @@ public class HistoryFragment extends Fragment {
                     if ( ! ( 200 == response.getStatus() ) ){
                         Log.e( TAG, "Another code occurred : " + response.getStatus());
                     }else{
-                        homeTextViewContent.setText( teams.get(0).getHistory() );
+                        homeTextViewContent.setText(Html.fromHtml( teams.get(0).getHistory() ).toString() );
                     }
                 }
 

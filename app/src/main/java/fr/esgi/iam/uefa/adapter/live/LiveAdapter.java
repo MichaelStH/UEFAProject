@@ -2,6 +2,7 @@ package fr.esgi.iam.uefa.adapter.live;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class LiveAdapter extends RecyclerView.Adapter<LiveAdapter.ViewHolder>{
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Action itemAction = actionsList.get( position );
 
-        holder.comment.setText(itemAction.getComment());
+        holder.comment.setText(Html.fromHtml( itemAction.getComment() ) );
     }
 
 }

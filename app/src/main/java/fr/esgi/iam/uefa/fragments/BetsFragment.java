@@ -205,7 +205,7 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
                         matchesAvailable = new ArrayList<String>();
                     }
 
-                    matchesAvailable.add( /*match.getId() + ". " + */ szTeam1 + " VS " + szTeam2 + " (" + match.getDate() + " " + match.getTime() + ")" );
+                    matchesAvailable.add( match.getId() + ". " +  szTeam1 + " VS " + szTeam2 + " (" + match.getDate() + " " + match.getTime() + ")" );
                 }
             }
         } catch (ParseException e) {

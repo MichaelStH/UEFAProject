@@ -65,7 +65,6 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener, 
     String szTeam1, szTeam2;
     ArrayList<String> matchesAvailable = null;
 
-    private static List<Match> matchesList = null;
     private static List<Team> teamsList = null;
 
     private ArrayList<String> matchesInfosList;
@@ -122,7 +121,7 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener, 
             }else {
                 loadUserInfos();
                 loadTeamInfos();
-                //loadAvailableMatches();
+                loadAvailableMatches();
             }
 
         }catch (NullPointerException exception){
@@ -186,6 +185,7 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener, 
         Picasso.with(mContext)
                 .load(UefaRestClient.BASE_ENDPOINT + "/" + bundle_team.getFlag())
                 .into(teamFlagImageView);
+
     }
 
     private void getUserUIDFromSharedPrefs(){
