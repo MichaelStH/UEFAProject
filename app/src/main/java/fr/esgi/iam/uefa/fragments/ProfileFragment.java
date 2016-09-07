@@ -58,6 +58,8 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener, 
     private ProgressBar mLoader;
     private RecyclerView contentRecyclerView;
 
+    private int iBetsLoaded = 0;
+
     private Team bundle_team = null;
 
     private BetHistoryListAdapter teamBetHistoryListAdapter;
@@ -238,6 +240,8 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener, 
                         betList.add( bet );
                     }
 
+                    iBetsLoaded = 0;
+
                     for ( int i = 0; i < betList.size() ; i++ ){
 
                         MyApplication.getUefaRestClient().getApiService().getMatches(betList.get(i).getIdMatch(), new Callback<List<Match>>() {
@@ -250,24 +254,11 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener, 
                                     matchesAvailable = new ArrayList<String>();
                                 }
 
-                                matchesAvailable.add( /*match.getId() + ". " + */ szTeam1 + " VS " + szTeam2 + " (" + match.get(0).getDate() + ")" );
+                                matchesAvailable.add( szTeam1 + " VS " + szTeam2 + " (" + match.get(0).getDate() + ")" );
 
-                                //create the adapter
-                                teamBetHistoryListAdapter = new BetHistoryListAdapter(mContext, betList, matchesAvailable);
-
-                                //Set properties for the RecyclerView
-                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
-                                contentRecyclerView.setLayoutManager(mLayoutManager);
-                                contentRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                                contentRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
-
-                                Utils.dismissLoader(mLoader);
-
-                                if ( contentRecyclerView != null && !contentRecyclerView.isInLayout()){
-                                    contentRecyclerView.setVisibility(View.VISIBLE);
+                                if( ( ++ iBetsLoaded ) == betList.size( ) ) {
+                                    createAdapter( );
                                 }
-
-                                contentRecyclerView.setAdapter(teamBetHistoryListAdapter);
                             }
 
                             @Override
@@ -285,6 +276,25 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener, 
                 Log.e(TAG, error.getMessage());
             }
         });
+    }
+
+    public void createAdapter( ) {
+        //create the adapter
+        teamBetHistoryListAdapter = new BetHistoryListAdapter(mContext, betList, matchesAvailable);
+
+        //Set properties for the RecyclerView
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+        contentRecyclerView.setLayoutManager(mLayoutManager);
+        contentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        contentRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
+
+        Utils.dismissLoader(mLoader);
+
+        if ( contentRecyclerView != null && !contentRecyclerView.isInLayout()){
+            contentRecyclerView.setVisibility(View.VISIBLE);
+        }
+
+        contentRecyclerView.setAdapter(teamBetHistoryListAdapter);
     }
 
     public static String retrieveTeamName( List<Team> teams, int idTeam ) {
@@ -326,7 +336,19 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener, 
     private void requestChangeUserPassword(String newPassword){
         String userToken = Utils.getUserToken(mContext);
 
-        MyApplication.getUefaRestClient().getApiService().changeUserPassword( true, userToken, newPassword, user.getPassword() );
+        MyApplication.getUefaRestClient().getApiService().changeUserPassword(true, userToken, newPassword, user.getPassword(), new Callback<UserResponse>() {
+            @Override
+            public void success(UserResponse userResponse, Response response) {
+
+                Log.e("OHOH", "response : " + userResponse.getUser() + "\n" + "newPassword : " + userResponse.getUser().getPassword() );
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(TAG, error.getMessage());
+            }
+        });
     }
 
     // Call this method to launch the edit dialog

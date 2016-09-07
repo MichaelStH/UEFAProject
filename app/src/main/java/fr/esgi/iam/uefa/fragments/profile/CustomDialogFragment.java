@@ -34,6 +34,8 @@ public class CustomDialogFragment extends DialogFragment implements View.OnClick
     private Button mButtonCancel;
     private Button mButtonValidate;
 
+    Dialog dialog = this.getDialog();
+
     private User user;
 
     // 1. Defines the listener interface with a method passing back data result.
@@ -61,13 +63,21 @@ public class CustomDialogFragment extends DialogFragment implements View.OnClick
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_change_user_password, container, false);
-    }
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        // Fetch arguments from bundle and set title
+        String title = getArguments().getString("title", "Change password");
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+
+        // Get the layout inflater
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View view = inflater.inflate(R.layout.dialog_change_user_password, null);
+
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setView(view);
+
         oldPasswordEt = (EditText) view.findViewById(R.id.team_profile_user_old_password_editText);
         newPasswordEt = (EditText) view.findViewById(R.id.team_profile_user_new_password_editText);
 
@@ -77,23 +87,9 @@ public class CustomDialogFragment extends DialogFragment implements View.OnClick
         mButtonCancel.setOnClickListener(CustomDialogFragment.this);
         mButtonValidate.setOnClickListener(CustomDialogFragment.this);
 
-        // Fetch arguments from bundle and set title
-        String title = getArguments().getString("title", "Change password");
-
-        getDialog().setTitle(title);
-
         // Show soft keyboard automatically and request focus to field
         oldPasswordEt.requestFocus();
-        getDialog().getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-    }
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        String title = getArguments().getString("title");
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder.setTitle(title);
-        alertDialogBuilder.setView(R.layout.dialog_change_user_password);
+        getActivity().getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         /*
         alertDialogBuilder.setPositiveButton(R.string.validate,  new DialogInterface.OnClickListener() {
 
@@ -138,6 +134,8 @@ public class CustomDialogFragment extends DialogFragment implements View.OnClick
     @Override
     public void onClick(View view) {
 
+        Log.e( "OHOH"," blabla " );
+
         switch (view.getId()){
             case R.id.button_change_user_password_validate:
 
@@ -147,7 +145,7 @@ public class CustomDialogFragment extends DialogFragment implements View.OnClick
                     return;
                 }
                 else{
-                    if ( user.getPassword() != oldPasswordEt.getText().toString() ){
+                    if ( !user.getPassword().equals( oldPasswordEt.getText().toString( ) ) ){
 
                         Log.e(TAG, "sendBackResult() - Wrong old password");
                         Toast.makeText(getActivity(), "Wrong old password", Toast.LENGTH_SHORT).show();

@@ -36,7 +36,7 @@ public interface UefaApiService {
     void disconnectUser(@Query( "disconnect" ) boolean bool, @Query("token") String userToken);
 
     @GET("/api/users/")
-    void changeUserPassword(boolean isUpdateRequestMethod, String userToken, String newPassword, String password);
+    void changeUserPassword(@Query("UpdateRequestMethod") boolean isUpdateRequestMethod, @Query("token") String userToken, @Query("newPassword") String newPassword, @Query("password") String password, Callback<UserResponse> callback);
 
     @GET("/api/articles/")
     void getArticles(Callback<List<Article>> cb);
