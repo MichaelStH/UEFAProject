@@ -11,6 +11,7 @@ import fr.esgi.iam.uefa.app.MyApplication;
 import fr.esgi.iam.uefa.fragments.BetsFragment;
 import fr.esgi.iam.uefa.fragments.ProfileFragment;
 import fr.esgi.iam.uefa.model.Match;
+import fr.esgi.iam.uefa.model.Stadium;
 import fr.esgi.iam.uefa.model.Team;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -25,6 +26,7 @@ public class RetrofitHelper {
 
     private static List<Match> matchesList = null;
     private static List<Team> teamsList = null;
+    private static List<Stadium> stadiumList = null;
 
     private static boolean isLoadData = false;
 
@@ -44,7 +46,7 @@ public class RetrofitHelper {
                     matchesList = matches;
 
                     if (isLoadData == true)
-                        context.onDataLoaded( matchesList,  teamsList );
+                        context.onDataLoaded( matchesList,  teamsList, stadiumList );
                     else
                         isLoadData = true;
                 }
@@ -59,7 +61,7 @@ public class RetrofitHelper {
     }
 
 
-    public static void getTeams(final BetsFragment context ){
+    public static void getTeams( final BetsFragment context ){
 
         MyApplication.getUefaRestClient().getApiService().getTeams(new Callback<List<Team>>() {
             @Override
@@ -71,7 +73,7 @@ public class RetrofitHelper {
                     teamsList = teams;
 
                     if (isLoadData == true)
-                        context.onDataLoaded( matchesList, teamsList);
+                        context.onDataLoaded( matchesList, teamsList, stadiumList );
                     else
                         isLoadData = true;
                 }
@@ -82,6 +84,32 @@ public class RetrofitHelper {
                 Log.e(TAG, "RetrofitError : " + error.getMessage());
             }
         });
+    }
+
+    public static void getStadiums( final BetsFragment context ){
+
+        MyApplication.getUefaRestClient().getApiService().getStadiums(new Callback<List<Stadium>>() {
+            @Override
+            public void success(List<Stadium> stadiums, Response response) {
+                if ( ! ( 200 == response.getStatus() ) ){
+                    Log.e( TAG, "Another code occurred : " + response.getStatus());
+                }else {
+                    stadiumList = new ArrayList<>();
+                    stadiumList = stadiums;
+
+                    if (isLoadData == true)
+                        context.onDataLoaded( matchesList, teamsList, stadiumList);
+                    else
+                        isLoadData = true;
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(TAG, "RetrofitError : " + error.getMessage());
+            }
+        });
+
     }
 
 }

@@ -242,7 +242,7 @@ public class ProfileFragment extends Fragment  implements View.OnClickListener, 
 
                     iBetsLoaded = 0;
 
-                    for ( int i = 0; i < betList.size() ; i++ ){
+                    for ( int i = 0; i <  betResponse.getBets().size() ; i++ ){
 
                         MyApplication.getUefaRestClient().getApiService().getMatches(betList.get(i).getIdMatch(), new Callback<List<Match>>() {
                             @Override

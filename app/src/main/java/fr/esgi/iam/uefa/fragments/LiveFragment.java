@@ -36,12 +36,10 @@ public class LiveFragment extends Fragment {
     private Context mContext;
 
     //Views and adapter
-    private View rootView;
     private ProgressBar mLoader;
     private RecyclerView contentRecyclerView;
     private LiveAdapter teamLiveAdapter;
 
-    private Team bundle_team;
 
     public static Fragment newInstance( ){
         LiveFragment fragment = new LiveFragment();
@@ -108,7 +106,6 @@ public class LiveFragment extends Fragment {
     }
 
     private void initViews(View view){
-
         mLoader = (ProgressBar) view.findViewById(R.id.team_live_loader);
         contentRecyclerView = (RecyclerView) view.findViewById(R.id.team_live_events_notifications_RecyclerView);
     }

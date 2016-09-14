@@ -8,6 +8,7 @@ import fr.esgi.iam.uefa.model.BetArrayResponse;
 import fr.esgi.iam.uefa.model.BetResponse;
 import fr.esgi.iam.uefa.model.Match;
 import fr.esgi.iam.uefa.model.Player;
+import fr.esgi.iam.uefa.model.Stadium;
 import fr.esgi.iam.uefa.model.Team;
 import fr.esgi.iam.uefa.model.UserResponse;
 import retrofit.Callback;
@@ -53,11 +54,20 @@ public interface UefaApiService {
     @GET("/api/players/")
     void getPlayers(Callback<List<Player>> cb);
 
+    @GET("/api/players/")
+    void getPlayers(@Query("id") int id ,Callback<List<Player>> cb);
+
     @GET("/api/matches/")
     void getMatches(Callback<List<Match>> cb);
 
     @GET("/api/matches/")
     void getMatches(@Query("id") int id , Callback<List<Match>> cb);
+
+    @GET("/api/stadiums/")
+    void getStadiums( Callback<List<Stadium>> cb);
+
+    @GET("/api/stadiums/")
+    void getStadium(@Query("id") int id , Callback<List<Stadium>> cb);
 
     @FormUrlEncoded
     @POST("/api/bets/")

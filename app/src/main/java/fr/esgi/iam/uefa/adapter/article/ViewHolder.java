@@ -32,7 +32,6 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         item_title = (TextView) view.findViewById(R.id.title_item);
         item_content = (TextView) view.findViewById(R.id.content_item);
 
-
         view.setOnClickListener(this);
 
         // Initialize other views, like TextView, ImageView, etc. here

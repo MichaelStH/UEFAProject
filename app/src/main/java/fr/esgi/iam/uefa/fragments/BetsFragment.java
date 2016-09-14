@@ -31,6 +31,7 @@ import fr.esgi.iam.uefa.helper.RetrofitHelper;
 import fr.esgi.iam.uefa.model.Bet;
 import fr.esgi.iam.uefa.model.BetResponse;
 import fr.esgi.iam.uefa.model.Match;
+import fr.esgi.iam.uefa.model.Stadium;
 import fr.esgi.iam.uefa.model.Team;
 import fr.esgi.iam.uefa.model.UserResponse;
 import fr.esgi.iam.uefa.utils.DeviceManagerUtils;
@@ -51,6 +52,7 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
 
     //Views
     private static Spinner teamMatchSpinner;
+    private TextView stadiumTextView;
     private Spinner teamScore1Spinner;
     private Spinner teamScore2Spinner;
     private EditText moneyEditText;
@@ -59,6 +61,7 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
 
     private static List<Match> matchesList = null;
     private static List<Team> teamsList = null;
+    private static List<Stadium> stadiumList = null;
 
     private int idMatch = 0, scoreTeam1 = 0, scoreTeam2 = 0, creditsWagered = 0;
     private String szIdMatch = "", userToken = "";
@@ -108,6 +111,9 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
     private void initViews(View view){
 
         teamMatchSpinner = (Spinner) view.findViewById(R.id.team_bet_team_match);
+
+        stadiumTextView = (TextView) view.findViewById(R.id.team_bet_stadium_textView);
+
         teamScore1Spinner = (Spinner) view.findViewById(R.id.team_bet_score_team_1_spinner);
         teamScore2Spinner = (Spinner) view.findViewById(R.id.team_bet_score_team_2_spinner);
 
@@ -148,12 +154,14 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
     public void loadAvailableMatches(){
         RetrofitHelper.getTeams((BetsFragment) instance);
         RetrofitHelper.getMatches((BetsFragment) instance);
+        RetrofitHelper.getStadiums((BetsFragment) instance);
     }
 
-    public void onDataLoaded( List<Match> matches, List<Team> teams ){
+    public void onDataLoaded(List<Match> matches, List<Team> teams, List<Stadium> stadiums ){
 
         matchesList = matches;
         teamsList = teams;
+        stadiumList = stadiums;
 
         matchesInfosList = getAvailableMatches();
 
@@ -162,6 +170,8 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
 
             teamMatchSpinner.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_dropdown_item, matchesInfosList));
             teamMatchSpinner .setOnItemSelectedListener( this );
+            teamScore1Spinner.setOnItemSelectedListener( this );
+            teamScore2Spinner.setOnItemSelectedListener( this );
         }
     }
 
@@ -233,18 +243,21 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()){
             case R.id.team_bet_team_match:
-
-                szIdMatch = String.valueOf(teamMatchSpinner.getSelectedItem().toString().charAt(0));
+                szIdMatch = getMatchID( teamMatchSpinner.getSelectedItem().toString() );
                 Log.e(TAG, "Test id : " + szIdMatch);
                 idMatch = Integer.valueOf( szIdMatch );
+
+                setStadiumNameForIDSelected( idMatch );
                 break;
 
             case R.id.team_bet_score_team_1_spinner:
                 scoreTeam1 = Integer.valueOf( teamScore1Spinner.getSelectedItem().toString() );
+                Log.e(TAG, "Test score id team 1 : " +  teamScore1Spinner.getSelectedItem().toString() );
                 break;
 
             case R.id.team_bet_score_team_2_spinner:
                 scoreTeam2 = Integer.valueOf( teamScore2Spinner.getSelectedItem().toString() );
+                Log.e(TAG, "Test score team 2 : " + teamScore2Spinner.getSelectedItem().toString() );
                 break;
 
             default:
@@ -254,13 +267,55 @@ public class BetsFragment extends Fragment  implements AdapterView.OnItemSelecte
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
 
+    private void setStadiumNameForIDSelected( int idMatch ){
+        MyApplication.getUefaRestClient().getApiService().getMatches( idMatch, new Callback<List<Match>>() {
+            @Override
+            public void success(List<Match> matches, Response response) {
+                if ( ! ( 200 == response.getStatus() ) ){
+                    Log.e( TAG, "Another code occurred : " + response.getStatus());
+                }else{
+                    MyApplication.getUefaRestClient().getApiService().getStadium( matches.get(0).getIdStadium(), new Callback<List<Stadium>>() {
+                        @Override
+                        public void success(List<Stadium> stadium, Response response) {
+                            if ( ! ( 200 == response.getStatus() ) ){
+                                Log.e( TAG, "Another code occurred : " + response.getStatus());
+                            }else{
+                                stadiumTextView.setText( stadium.get(0).getName() );
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.e(TAG, error.getMessage());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(TAG, error.getMessage());
+            }
+        });
+
+    }
+
+    public String  getMatchID(String requestMatch){
+        String matchId = "";
+        int i = 0;
+
+        while( requestMatch.charAt( i ) != '.' ) {
+            matchId = matchId + requestMatch.charAt( i );
+            i++;
+        }
+
+        return matchId;
     }
 
     @Override
     public void onClick(View view) {
-
-//        Log.e(TAG, "button click");
 
         SharedPreferences sharedPref = mContext.getSharedPreferences( MyApplication.USER_SHARED_PREFS_TAG, Context.MODE_PRIVATE );
         userToken = sharedPref.getString( MyApplication.USER_TOKEN_ARG, "" );

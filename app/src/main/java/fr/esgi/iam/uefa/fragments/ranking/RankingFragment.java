@@ -36,7 +36,6 @@ public class RankingFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mContext = getActivity();
-
     }
 
     @Nullable

@@ -4,7 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/activity_horizontal_margin">
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/team_live_event_type_icon"
@@ -12,11 +13,74 @@
         android:layout_height="48dp"
         android:layout_margin="16dp"/>
 
-    <TextView
-        android:id="@+id/team_live_event_text_description"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        tools:text="@string/events_notifications"/>
+        android:orientation="vertical"
+        android:layout_gravity="center">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/team_live_event_match_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                tools:hint="Angleterre vs Italie"
+                android:textStyle="bold|italic"/>
+
+            <TextView
+                android:id="@+id/team_live_event_stadium_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                tools:hint="Stade de Nice"
+                android:layout_margin="4dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/team_live_event_time_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                tools:hint="25'"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_margin="4dp"/>
+
+            <TextView
+                android:id="@+id/team_live_event_player_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:hint="Wayne Rooney"
+                android:layout_margin="4dp"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/team_live_event_text_description_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_margin="8dp"
+            tools:hint="@string/events_notifications"/>
+
+
+    </LinearLayout>
 </LinearLayout>
